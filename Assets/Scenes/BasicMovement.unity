@@ -562,6 +562,8 @@ MonoBehaviour:
   movePower: 20
   jumpPower: 20
   jumpCount: 2
+  backjumpX: 20
+  backjumpY: 20
   dashSpeed: 100
   startDashTime: 0.1
   direction: 0

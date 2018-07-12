@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour {
     bool isJumping = false;
 
     //--BackJump elements
-    public float backjumpPower = 1f;
+    public float backjumpX = 1f;
+    public float backjumpY = 1f;
     bool isBackjump = false;
     private float backjumpCoolTime;
 
@@ -31,8 +32,7 @@ public class PlayerController : MonoBehaviour {
     Animator animator;
     Vector3 movement;
 
-    //애니메이션 상태인포 받아오는 
-    //AnimatorStateInfo animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
 
     void Awake()
     {
@@ -53,9 +53,10 @@ public class PlayerController : MonoBehaviour {
 
 	void Update () {
 
+        AnimatorStateInfo animatorState = animator.GetCurrentAnimatorStateInfo(0);
 
         //가만히 서있을 경우
-        if(Input.GetAxisRaw("Horizontal") == 0)
+        if (Input.GetAxisRaw("Horizontal") == 0)
         {
             animator.SetBool("isMoving", false);
 
@@ -91,6 +92,8 @@ public class PlayerController : MonoBehaviour {
         //백점프
         if(Input.GetKeyDown(KeyCode.LeftShift) && Input.GetAxisRaw("Horizontal") == 0 )
         {
+            if (animator.GetBool("isJumping") || animatorState.IsName("SONIC_DASH"))
+                return;
             isBackjump = true;
             animator.SetBool("isBackJump", true);
             BackJump();
@@ -99,10 +102,8 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        //조건문 대쉬동안 행동 못하게 들어갈 부분
-        AnimatorStateInfo animatorState = animator.GetCurrentAnimatorStateInfo(0);
-
-        if (!animatorState.IsName("SONIC_BACKJUMP"))
+        //백점프 중에는 행동 불가
+        if (!animator.GetBool("isBackJump"))
         {
             Move();
             Dash();
@@ -161,16 +162,18 @@ public class PlayerController : MonoBehaviour {
 
         if(Rdir == true && animator.GetBool("isBackJump"))
         {
-            rigid.velocity = Vector2.left * backjumpPower;
+            Vector2 backjumpVelocity = new Vector2(-backjumpX, backjumpY);
+            rigid.AddForce(backjumpVelocity, ForceMode2D.Impulse);
         }
         else if(Rdir == false && animator.GetBool("isBackJump"))
         {
-            rigid.velocity = Vector2.right * backjumpPower;
+            Vector2 backjumpVelocity = new Vector2(backjumpX, backjumpY);
+            rigid.AddForce(backjumpVelocity, ForceMode2D.Impulse);
         }
 
         backjumpCoolTime = 2f;
         isBackjump = false;
-        animator.SetBool("isBackJump", false);
+        
     }
 
     //-------[Landing Function]---------------
@@ -180,6 +183,7 @@ public class PlayerController : MonoBehaviour {
         if(other.gameObject.layer == 8)
         {
             animator.SetBool("isJumping", false);
+            animator.SetBool("isBackJump", false);
             jumpCount = 2;
         }
     }
