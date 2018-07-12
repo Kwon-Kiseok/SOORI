@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour {
     Animator animator;
     Vector3 movement;
 
+    //애니메이션 상태인포 받아오는 
+    //AnimatorStateInfo animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
     void Awake()
     {
         dashCoolTime = 0.01f; //대쉬 쿨타임
@@ -49,7 +52,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update () {
-        
+
+
         //가만히 서있을 경우
         if(Input.GetAxisRaw("Horizontal") == 0)
         {
@@ -88,15 +92,17 @@ public class PlayerController : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.LeftShift) && Input.GetAxisRaw("Horizontal") == 0 )
         {
             isBackjump = true;
+            animator.SetBool("isBackJump", true);
             BackJump();
         }        
 	}
 
     void FixedUpdate()
     {
-        //조건문 백점프동안 행동 못하게 들어갈 부분
+        //조건문 대쉬동안 행동 못하게 들어갈 부분
+        AnimatorStateInfo animatorState = animator.GetCurrentAnimatorStateInfo(0);
 
-        if (isBackjump == false && backjumpCoolTime < 1)
+        if (!animatorState.IsName("SONIC_BACKJUMP"))
         {
             Move();
             Dash();
@@ -153,17 +159,18 @@ public class PlayerController : MonoBehaviour {
 
         rigid.velocity = Vector2.zero;
 
-        if(Rdir == true)
+        if(Rdir == true && animator.GetBool("isBackJump"))
         {
             rigid.velocity = Vector2.left * backjumpPower;
         }
-        else if(Rdir == false)
+        else if(Rdir == false && animator.GetBool("isBackJump"))
         {
             rigid.velocity = Vector2.right * backjumpPower;
         }
 
         backjumpCoolTime = 2f;
         isBackjump = false;
+        animator.SetBool("isBackJump", false);
     }
 
     //-------[Landing Function]---------------
