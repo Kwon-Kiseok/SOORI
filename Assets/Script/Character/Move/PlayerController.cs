@@ -7,11 +7,17 @@ public class PlayerController : MonoBehaviour {
 
     //--Move elements
     public float movePower = 1f;
+    private bool Rdir;
 
     //--Jump elements
     public float jumpPower = 1f;
     public int jumpCount = 2;
     bool isJumping = false;
+
+    //--BackJump elements
+    public float backjumpPower = 1f;
+    bool isBackjump = false;
+    private float backjumpCoolTime;
 
     //--Dash elements
     public float dashSpeed;
@@ -28,7 +34,10 @@ public class PlayerController : MonoBehaviour {
     void Awake()
     {
         dashCoolTime = 0.01f; //대쉬 쿨타임
+        backjumpCoolTime = 0.01f; //백점프 쿨타임
         jumpCount = 0; //시작부터 점프하는 것 방지
+        Rdir = true;
+
     }
 
     void Start () {
@@ -45,43 +54,63 @@ public class PlayerController : MonoBehaviour {
         if(Input.GetAxisRaw("Horizontal") == 0)
         {
             animator.SetBool("isMoving", false);
+
         }
         //왼쪽 이동
         else if(Input.GetAxisRaw("Horizontal") < 0)
         {
             animator.SetBool("isMoving", true);
+            Rdir = false;
+
         }
         //오른쪽 이동
         else if(Input.GetAxisRaw("Horizontal") > 0)
         {
-            animator.SetBool("isMoving",true); 
+            animator.SetBool("isMoving",true);
+            Rdir = true;
+
         }
         //점프
         if (jumpCount > 0)
         {
-            if (Input.GetButtonDown("Jump"))
+            if (backjumpCoolTime < 1)
             {
-                jumpCount--;
-                isJumping = true;
-                animator.SetBool("isJumping", true);
-                animator.SetTrigger("doJumping");
+                if (Input.GetButtonDown("Jump"))
+                {
+                    jumpCount--;
+                    isJumping = true;
+                    animator.SetBool("isJumping", true);
+                    animator.SetTrigger("doJumping");
+                }
             }
         }
-
-        
+        //백점프
+        if(Input.GetKeyDown(KeyCode.LeftShift) && Input.GetAxisRaw("Horizontal") == 0 )
+        {
+            isBackjump = true;
+            BackJump();
+        }        
 	}
 
     void FixedUpdate()
     {
-        Move();
-        Dash();
-        Jump();
+        //조건문 백점프동안 행동 못하게 들어갈 부분
+
+        if (isBackjump == false && backjumpCoolTime < 1)
+        {
+            Move();
+            Dash();
+            Jump();
+        }
+        
     }
 
     void LateUpdate()
     {
         if (dashCoolTime > 0)
             dashCoolTime -= Time.smoothDeltaTime;
+        if (backjumpCoolTime > 0)
+            backjumpCoolTime -= Time.smoothDeltaTime;
     }
 
     //-------[Moving Function]---------------
@@ -116,22 +145,38 @@ public class PlayerController : MonoBehaviour {
 
         isJumping = false;
     }
+    //-------[BackJump Function]------------
+    void BackJump()
+    {
+        if (!isBackjump)
+            return;
 
+        rigid.velocity = Vector2.zero;
+
+        if(Rdir == true)
+        {
+            rigid.velocity = Vector2.left * backjumpPower;
+        }
+        else if(Rdir == false)
+        {
+            rigid.velocity = Vector2.right * backjumpPower;
+        }
+
+        backjumpCoolTime = 2f;
+        isBackjump = false;
+    }
 
     //-------[Landing Function]---------------
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         Debug.Log("Attach : " + other.gameObject.layer);
-        if(other.gameObject.layer == 8 && rigid.velocity.y < 0)
+        if(other.gameObject.layer == 8)
         {
             animator.SetBool("isJumping", false);
             jumpCount = 2;
         }
     }
-    void OnTriggerExit2D(Collider2D other)
-    {
-        Debug.Log("Detach : " + other.gameObject.layer);
-    }
+ 
 
     //-------[Dash Function]---------------
     void Dash()
@@ -143,13 +188,13 @@ public class PlayerController : MonoBehaviour {
             {
                 if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && Input.GetKeyDown(KeyCode.LeftShift))
                 {
-                    direction = 1;
                     animator.SetBool("isDash", true);
+                direction = 1;
                 }
                 else if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && Input.GetKeyDown(KeyCode.LeftShift))
                 {
-                    direction = 2;
-                    animator.SetBool("isDash", true);             
+                    animator.SetBool("isDash", true);
+                direction = 2;
             }
             } else
             {
