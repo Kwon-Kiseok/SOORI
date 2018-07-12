@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour {
         //백점프
         if(Input.GetKeyDown(KeyCode.LeftShift) && Input.GetAxisRaw("Horizontal") == 0 )
         {
-            if (animator.GetBool("isJumping") || animatorState.IsName("SONIC_DASH"))
+            if (animator.GetBool("isJumping") || animatorState.IsName("SONIC_DASH") || animator.GetBool("isBackJump"))
                 return;
             isBackjump = true;
             animator.SetBool("isBackJump", true);
