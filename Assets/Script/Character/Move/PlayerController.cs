@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
     public float jumpPower = 1f;
     public int jumpCount = 2;
     bool isJumping = false;
+    public bool isFalling = false;
 
     //--BackJump elements
     public float backjumpX = 1f;
@@ -54,6 +55,8 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 
         AnimatorStateInfo animatorState = animator.GetCurrentAnimatorStateInfo(0);
+
+        FallCheck();
 
         //가만히 서있을 경우
         if (Input.GetAxisRaw("Horizontal") == 0)
@@ -149,7 +152,6 @@ public class PlayerController : MonoBehaviour {
 
         Vector2 jumpVelocity = new Vector2(0, jumpPower);
         rigid.AddForce(jumpVelocity, ForceMode2D.Impulse);
-
         isJumping = false;
     }
     //-------[BackJump Function]------------
@@ -218,7 +220,7 @@ public class PlayerController : MonoBehaviour {
                     direction = 0;
                     dashTime = startDashTime;
                     rigid.velocity = Vector2.zero;
-                    dashCoolTime = 2f;            //대쉬 쿨타임 
+                    dashCoolTime = 1f;            //대쉬 쿨타임 
                     animator.SetBool("isDash", false);
                 }
                 else
@@ -238,4 +240,17 @@ public class PlayerController : MonoBehaviour {
         
     }
 
+
+    //-------[Falling Check Function]---------
+    void FallCheck()
+    {
+        if(rigid.velocity.y < -0.1)
+        {
+            isFalling = true;
+        }
+        else
+        {
+            isFalling = false;
+        }
+    }
 }

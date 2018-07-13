@@ -3,8 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - BG
+  tags: [BG]
   layers:
   - Default
   - TransparentFX
@@ -42,9 +41,27 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BackGround
+    uniqueID: 3172264609
+    locked: 0
   - name: Ground
     uniqueID: 4096547091
     locked: 0
-  - name: Grass
-    uniqueID: 2559674479
+  - name: Deco
+    uniqueID: 781327103
+    locked: 0
+  - name: Rock
+    uniqueID: 3597579055
+    locked: 0
+  - name: Monster
+    uniqueID: 51929247
+    locked: 0
+  - name: Player
+    uniqueID: 2759814797
+    locked: 0
+  - name: Item
+    uniqueID: 1919446737
+    locked: 0
+  - name: ForeGround
+    uniqueID: 4031646999
     locked: 0

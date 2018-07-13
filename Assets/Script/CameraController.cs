@@ -111,12 +111,6 @@ public class CameraController : MonoBehaviour {
             cameraPosition.y = target.transform.position.y - downviewY;
             transform.position = Vector3.Lerp(transform.position, cameraPosition, followSpeed * Time.deltaTime);
         }
-        //위키 누를 때 카메라 무빙
-        else if (Input.GetKey(KeyCode.UpArrow) && cameraPosition.y < yMax)
-        {
-            cameraPosition.y = target.transform.position.y + downviewY;
-            transform.position = Vector3.Lerp(transform.position, cameraPosition, followSpeed * Time.deltaTime);
-        }
     }
 
 
