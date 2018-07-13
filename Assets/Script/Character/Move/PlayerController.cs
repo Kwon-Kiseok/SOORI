@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     //-------[Landing Function]---------------
-    void OnTriggerStay2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("Attach : " + other.gameObject.layer);
         if(other.gameObject.layer == 8)
@@ -187,7 +187,11 @@ public class PlayerController : MonoBehaviour {
             jumpCount = 2;
         }
     }
- 
+    void OnTriggerExit(Collider other)
+    {
+        Debug.Log("Detach : " + other.gameObject.layer);
+    }
+
 
     //-------[Dash Function]---------------
     void Dash()
