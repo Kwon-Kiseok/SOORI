@@ -27,6 +27,7 @@ public class CameraController : MonoBehaviour {
     public float yMin = 0f;
     public float yMax = 10f;
 
+
     Vector3 cameraPosition;
 
     public float smoothTime = .15f;
@@ -60,10 +61,10 @@ public class CameraController : MonoBehaviour {
                 cameraPosition.x = target.transform.position.x + offsetX;
                 cameraPosition.y = target.transform.position.y + offsetY;
                 cameraPosition.z = target.transform.position.z + offsetZ;
-
-                transform.position = Vector3.Lerp(transform.position, cameraPosition, followSpeed * Time.deltaTime);
                 if (cameraPosition.x > xMax)
                     return;
+                transform.position = Vector3.Lerp(transform.position, cameraPosition, followSpeed * Time.deltaTime);
+                
             }
             else
             {
@@ -87,10 +88,10 @@ public class CameraController : MonoBehaviour {
                 cameraPosition.y = target.transform.position.y + offsetY;
                 cameraPosition.z = target.transform.position.z + offsetZ;
 
-
-                transform.position = Vector3.Lerp(transform.position, cameraPosition, followSpeed * Time.deltaTime);
                 if (cameraPosition.x < xMin)
                     return;
+                transform.position = Vector3.Lerp(transform.position, cameraPosition, followSpeed * Time.deltaTime);
+                
             }
             else
             {
@@ -112,7 +113,6 @@ public class CameraController : MonoBehaviour {
             transform.position = Vector3.Lerp(transform.position, cameraPosition, followSpeed * Time.deltaTime);
         }
     }
-
 
 
 
