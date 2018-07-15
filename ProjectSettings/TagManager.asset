@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BG
   - Boundary
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX
@@ -66,4 +67,7 @@ TagManager:
     locked: 0
   - name: ForeGround
     uniqueID: 4031646999
+    locked: 0
+  - name: UI
+    uniqueID: 2257038695
     locked: 0

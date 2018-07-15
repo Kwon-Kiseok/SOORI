@@ -189,11 +189,26 @@ public class PlayerController : MonoBehaviour {
             jumpCount = 2;
         }
     }
-    void OnTriggerExit(Collider other)
+    //--------[MovingPlatform Function]-------
+    void OnTriggerStay2D(Collider2D other)
+    {
+        //플레이어가 MovingPlatform 태그 위에 있을 경우 
+        //움직이는 플랫폼의 자식이 되어 같이 움직임
+        if(other.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = other.transform;
+        }
+    }
+    void OnTriggerExit2D(Collider2D other)
     {
         Debug.Log("Detach : " + other.gameObject.layer);
+        //플레이어가 MovingPlatform 태그에서 떨어졌을 경우
+        //움직이는 플랫폼의 자식에서 벗어나 같이 움직이지 않음
+        if (other.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = null;
+        }
     }
-
 
     //-------[Dash Function]---------------
     void Dash()
