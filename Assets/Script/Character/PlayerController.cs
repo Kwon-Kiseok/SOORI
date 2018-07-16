@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
+
+    //--State elements
+    public int health = 2;
 
 
     //--Move elements
@@ -266,6 +269,17 @@ public class PlayerController : MonoBehaviour {
         else
         {
             isFalling = false;
+        }
+    }
+
+    //-------[Take Damage Function]----------
+    public void TakeDamage(int damage, bool playHitReaction)
+    {
+        this.health = this.health - damage;
+        Debug.Log("Player Health : " + this.health.ToString());
+        if(playHitReaction == true)
+        {
+            Debug.Log("Hit Reaction Called");
         }
     }
 }
