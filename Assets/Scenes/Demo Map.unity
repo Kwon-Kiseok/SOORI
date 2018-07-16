@@ -8332,6 +8332,48 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3d8111f2d6b500447971b8c0859c7086, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &439767341
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4167675413439274, guid: a0a6cf7e3a7374a409d69bfad7098ca5, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 94.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4167675413439274, guid: a0a6cf7e3a7374a409d69bfad7098ca5, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 72.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4167675413439274, guid: a0a6cf7e3a7374a409d69bfad7098ca5, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4167675413439274, guid: a0a6cf7e3a7374a409d69bfad7098ca5, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4167675413439274, guid: a0a6cf7e3a7374a409d69bfad7098ca5, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4167675413439274, guid: a0a6cf7e3a7374a409d69bfad7098ca5, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4167675413439274, guid: a0a6cf7e3a7374a409d69bfad7098ca5, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4167675413439274, guid: a0a6cf7e3a7374a409d69bfad7098ca5, type: 2}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a0a6cf7e3a7374a409d69bfad7098ca5, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &445464073
 GameObject:
   m_ObjectHideFlags: 0
@@ -10895,7 +10937,7 @@ GameObject:
   - component: {fileID: 566442076}
   m_Layer: 8
   m_Name: "\uB5452 (2)"
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32941,7 +32983,7 @@ GameObject:
   - component: {fileID: 1651163054}
   m_Layer: 8
   m_Name: "\uB5452 (1)"
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

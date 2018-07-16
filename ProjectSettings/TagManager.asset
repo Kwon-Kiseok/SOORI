@@ -7,6 +7,9 @@ TagManager:
   - BG
   - Boundary
   - MovingPlatform
+  - FallingPlatform
+  - Ground
+  - DestroyZone
   layers:
   - Default
   - TransparentFX
