@@ -6,7 +6,7 @@ public class ContactDamage : MonoBehaviour {
 
     public int damage;
     public bool playHitReaction = false;
-    public bool playerHit = false; //중첩충돌 방지용
+    //public bool playerHit = false; //중첩충돌 방지용
 
     private GameObject playerObj;
 
@@ -15,17 +15,18 @@ public class ContactDamage : MonoBehaviour {
         playerObj = GameObject.FindGameObjectWithTag("Player");
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
-        if(other.tag == "Player" && playerHit == false)
+        if(other.tag == "Player")
         {
             playerObj.GetComponent<PlayerController>().TakeDamage(this.damage, this.playHitReaction);
-            playerHit = true;
+            //playerHit = true;
         }
-    }
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.tag == "Player" && playerHit == true)
-            playerHit = false;
-    }
+    }   
+
+    //void OnTriggerExit2D(Collider2D other)
+    //{
+    //    if (other.tag == "Player" && playerHit == true)
+    //        playerHit = false;
+    //}
 }

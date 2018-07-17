@@ -20157,6 +20157,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 1252291044120546, guid: baabb721c54ac5d43987412d88a00cf7, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: baabb721c54ac5d43987412d88a00cf7, type: 2}
   m_IsPrefabParent: 0
@@ -39359,20 +39363,6 @@ Prefab:
     - target: {fileID: 4825159682193104, guid: 3565bf818db51204d935132a1020cf35, type: 2}
       propertyPath: m_RootOrder
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1535957993971938, guid: 3565bf818db51204d935132a1020cf35, type: 2}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114326506374396116, guid: 3565bf818db51204d935132a1020cf35,
-        type: 2}
-      propertyPath: maxHealth
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114326506374396116, guid: 3565bf818db51204d935132a1020cf35,
-        type: 2}
-      propertyPath: immunityDuration
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3565bf818db51204d935132a1020cf35, type: 2}

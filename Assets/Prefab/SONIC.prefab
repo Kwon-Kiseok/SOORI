@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 95541806463611600}
   - component: {fileID: 61565832214408510}
   - component: {fileID: 70816850127722866}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SONIC
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -164,6 +164,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3aeb1ce168921a499ebc378066843c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 2
+  isImmune: 0
+  immunityDuration: 2
+  immunityTime: 0
   movePower: 20
   jumpPower: 30
   jumpCount: 2

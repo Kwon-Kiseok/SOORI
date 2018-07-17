@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour {
         //피격무적인지 아닌지 체크
         if(this.isImmune == true)
         {
-            SpriteFlicker();
+            StartCoroutine(SpriteFlicker());
             immunityTime = immunityTime + Time.deltaTime;
 
             if(immunityTime >= immunityDuration)
@@ -210,7 +210,8 @@ public class PlayerController : MonoBehaviour {
             animator.SetBool("isJumping", false);
             animator.SetBool("isBackJump", false);
             jumpCount = 2;
-        }        
+        }
+              
 
     }
     //--------[MovingPlatform Function]-------
@@ -313,19 +314,34 @@ public class PlayerController : MonoBehaviour {
     {
         this.isImmune = true;
         this.immunityTime = 0f;
+
+        //피격 애니메이션 넣어야 할 부분
     }
 
     //--------[SpriteFlicker Function]---------
-    void SpriteFlicker()
+    IEnumerator SpriteFlicker()
     {
-        if(this.flickerTime < this.flickerDuration)
+        int countTime = 0;
+
+        while(countTime < 10)
         {
-            this.flickerTime = this.flickerTime + Time.deltaTime;
+            //알파값 변경 이펙트
+            if (countTime % 2 == 0)
+            {
+                spriteRenderer.color = new Color32(255, 255, 255, 90);
+            }
+            else
+                spriteRenderer.color = new Color32(255, 255, 255, 180);
+
+            //이 부분 항상 무적시간/10의 값이어야함 
+            yield return new WaitForSeconds(0.2f);
+
+            countTime++;
         }
-        else if(this.flickerTime >= this.flickerDuration)
-        {
-            spriteRenderer.enabled = !(spriteRenderer.enabled);
-            this.flickerTime = 0;
-        }
+
+        //알파값 변경 이펙트 종료
+        spriteRenderer.color = new Color32(255, 255, 255, 255);
+
+        yield return null;
     }
 }
