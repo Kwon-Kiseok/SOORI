@@ -31,7 +31,7 @@ public class EnemySlime : EnemyController {
             Flip();
         }
         //플레이어와 부딪혔을 경우
-        else if(other.tag == "Player")
+        else if(other.tag == "ObstaclePlatform")
         {
             Flip();
         }

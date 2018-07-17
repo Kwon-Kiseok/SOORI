@@ -7,18 +7,18 @@ public class ContactDamage : MonoBehaviour {
     public int damage = 1;
     public bool playHitReaction = false;
 
-    private PlayerController playerObj;
+    private GameObject playerObj;
 
     void Awake()
     {
-        playerObj = GetComponent<PlayerController>();    
+        playerObj = GameObject.FindGameObjectWithTag("Player");
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Player")
         {
-            playerObj.TakeDamage(this.damage, this.playHitReaction);
+            playerObj.GetComponent<PlayerController>().TakeDamage(this.damage, this.playHitReaction);
         }
     }
 }

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4999094625598010}
   - component: {fileID: 58606830764681756}
   - component: {fileID: 114149716119433126}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: triggerDamage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 114717441030340106}
   m_Layer: 9
   m_Name: enemySlime
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  playHitReaction: 0
+  playHitReaction: 1
 --- !u!114 &114717441030340106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFacingRight: 0
-  maxSpeed: 10
+  maxSpeed: 2
 --- !u!212 &212192410029997244
 SpriteRenderer:
   m_ObjectHideFlags: 1
