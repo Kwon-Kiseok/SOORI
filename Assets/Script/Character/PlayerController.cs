@@ -5,8 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     //--State elements
-    public int health = 2;
+    public int Health;
+    public bool isImmune = false; //현재 플레이어가 무적인지 아닌지
+    public float immunityDuration = 1.5f; //무적시간이 얼마인지 나타낸다
+    [SerializeField]private float immunityTime = 0f; //무적이 된 지 몇초인지 나타낸다
 
+    //--SpriteFlicker elements
+    private float flickerDuration = 0.1f; //스프라이트가 화면에 그려지거나 안그려지는 시간을 의미, 깜빡임의 시간 조절
+    private float flickerTime = 0f; //현재 플리커의 상태가 지속된 상태의 누적 시간 
 
     //--Move elements
     public float movePower = 1f;
@@ -35,7 +41,7 @@ public class PlayerController : MonoBehaviour {
     Rigidbody2D rigid;
     Animator animator;
     Vector3 movement;
-
+    SpriteRenderer spriteRenderer;
 
 
     void Awake()
@@ -49,17 +55,31 @@ public class PlayerController : MonoBehaviour {
 
     void Start () {
         rigid = gameObject.GetComponent<Rigidbody2D>();
-        animator = gameObject.GetComponent<Animator>();     
-
+        animator = gameObject.GetComponent<Animator>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         dashTime = startDashTime;
-        
-	}
+
+    }
 
 	void Update () {
 
         AnimatorStateInfo animatorState = animator.GetCurrentAnimatorStateInfo(0);
-
+        //떨어지는 상태 체크
         FallCheck();
+
+        //피격무적인지 아닌지 체크
+        if(this.isImmune == true)
+        {
+            SpriteFlicker();
+            immunityTime = immunityTime + Time.deltaTime;
+
+            if(immunityTime >= immunityDuration)
+            {
+                this.isImmune = false;
+                Debug.Log("Imuunity has ended");
+            }
+        }
+
 
         //가만히 서있을 경우
         if (Input.GetAxisRaw("Horizontal") == 0)
@@ -190,7 +210,8 @@ public class PlayerController : MonoBehaviour {
             animator.SetBool("isJumping", false);
             animator.SetBool("isBackJump", false);
             jumpCount = 2;
-        }
+        }        
+
     }
     //--------[MovingPlatform Function]-------
     void OnTriggerStay2D(Collider2D other)
@@ -275,11 +296,36 @@ public class PlayerController : MonoBehaviour {
     //-------[Take Damage Function]----------
     public void TakeDamage(int damage, bool playHitReaction)
     {
-        this.health = this.health - damage;
-        Debug.Log("Player Health : " + this.health.ToString());
-        if(playHitReaction == true)
+        if (this.isImmune == false)
         {
-            Debug.Log("Hit Reaction Called");
+            this.Health = this.Health - damage;
+            Debug.Log("Player Health : " + this.Health.ToString());
+
+            if (playHitReaction == true)
+            {
+                Debug.Log("Hit Reaction Called");
+                PlayHitReaction();
+            }
+        }
+    }
+   //-------[PlayHitReaction Function]----------
+   void PlayHitReaction()
+    {
+        this.isImmune = true;
+        this.immunityTime = 0f;
+    }
+
+    //--------[SpriteFlicker Function]---------
+    void SpriteFlicker()
+    {
+        if(this.flickerTime < this.flickerDuration)
+        {
+            this.flickerTime = this.flickerTime + Time.deltaTime;
+        }
+        else if(this.flickerTime >= this.flickerDuration)
+        {
+            spriteRenderer.enabled = !(spriteRenderer.enabled);
+            this.flickerTime = 0;
         }
     }
 }

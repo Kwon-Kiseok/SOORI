@@ -20,9 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4938290892511642}
   - component: {fileID: 212018211486415140}
-  - component: {fileID: 114119999118624916}
   - component: {fileID: 61223588292931070}
-  - component: {fileID: 114557128854290908}
+  - component: {fileID: 114119999118624916}
   - component: {fileID: 114356870501240612}
   m_Layer: 0
   m_Name: Spike
@@ -56,7 +55,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.24}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -67,7 +66,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 11.8, y: 5.18}
+  m_Size: {x: 10.3, y: 3.93}
   m_EdgeRadius: 0
 --- !u!114 &114119999118624916
 MonoBehaviour:
@@ -82,6 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   playHitReaction: 1
+  playerHit: 0
 --- !u!114 &114356870501240612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -93,19 +93,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58c443a20a9b3947b43d41adfd6767c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114557128854290908
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1401082221987870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96782a8736063844cac6d8d5fa9856a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  playHitReaction: 1
 --- !u!212 &212018211486415140
 SpriteRenderer:
   m_ObjectHideFlags: 1
