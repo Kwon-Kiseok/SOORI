@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour {
         //백점프
         if(Input.GetKeyDown(KeyCode.LeftShift) && Input.GetAxisRaw("Horizontal") == 0 )
         {
-            if (animator.GetBool("isJumping") || animatorState.IsName("SONIC_DASH") || animator.GetBool("isBackJump"))
+            if (animator.GetBool("isJumping") || animatorState.IsName("SONIC_DASH") || animator.GetBool("isBackJump") || animatorState.IsName("D_SONIC_DASH"))
                 return;
             isBackjump = true;
             animator.SetBool("isBackJump", true);
@@ -214,10 +214,10 @@ public class PlayerController : MonoBehaviour {
         {
             animator.SetBool("isJumping", false);
             animator.SetBool("isBackJump", false);
+            animator.SetBool("isFalling", false);
             jumpCount = 2;
         }
-              
-
+        
     }
     //--------[MovingPlatform Function]-------
     void OnTriggerStay2D(Collider2D other)
@@ -289,13 +289,15 @@ public class PlayerController : MonoBehaviour {
     //-------[Falling Check Function]---------
     void FallCheck()
     {
-        if(rigid.velocity.y < -0.1)
+        if(rigid.velocity.y < -0.1 && !animator.GetBool("isJumping"))
         {
             isFalling = true;
+            animator.SetBool("isFalling", true);
         }
         else
         {
             isFalling = false;
+            animator.SetBool("isFalling", false);
         }
     }
 
@@ -323,8 +325,8 @@ public class PlayerController : MonoBehaviour {
     {
         this.isImmune = true;
         this.immunityTime = 0f;
-
         //피격 애니메이션 넣어야 할 부분
+        this.gameObject.GetComponent<Animator>().SetTrigger("Damage");
     }
 
     //--------[SpriteFlicker Function]---------
@@ -370,7 +372,7 @@ public class PlayerController : MonoBehaviour {
         this.isDead = true;
         this.spriteRenderer.sprite = deadSprite;
         this.animator.enabled = false;
-        //this.gameObject.GetComponent<Animator>().SetTrigger("죽을때");
+        this.gameObject.GetComponent<Animator>().SetTrigger("Damage");
         PlayerController controller = this.gameObject.GetComponent<PlayerController>();
         controller.enabled = false;
         rigid.velocity = new Vector2(0, 0);
