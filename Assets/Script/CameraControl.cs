@@ -53,7 +53,7 @@ public class CameraControl : MonoBehaviour
             Rdir = false;
         }
         AnimatorStateInfo animatorState = animator.GetCurrentAnimatorStateInfo(0);
-        if(animatorState.IsName("SONIC_IDLE"))
+        if(animatorState.IsName("SONIC_IDLE") || animatorState.IsName("D_SONIC_IDLE"))
         {
             downInput = true;
         }
