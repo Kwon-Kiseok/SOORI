@@ -214,7 +214,7 @@ public class PlayerController : MonoBehaviour {
         {
             animator.SetBool("isJumping", false);
             animator.SetBool("isBackJump", false);
-            animator.SetBool("isFalling", false);
+           // animator.SetBool("isFalling", false);
             jumpCount = 2;
         }
         
