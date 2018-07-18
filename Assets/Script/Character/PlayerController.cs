@@ -6,10 +6,10 @@ public class PlayerController : MonoBehaviour {
 
     //--State elements
     public int Health;
-    public bool isImmune = false; //현재 플레이어가 무적인지 아닌지
+    public bool isImmune; //현재 플레이어가 무적인지 아닌지
     public float immunityDuration = 1.5f; //무적시간이 얼마인지 나타낸다
     [SerializeField]private float immunityTime = 0f; //무적이 된 지 몇초인지 나타낸다
-    [SerializeField]private bool isDead = false;
+    [SerializeField]private bool isDead;
 
     //--Dead event elements
     public Sprite deadSprite;
@@ -48,13 +48,14 @@ public class PlayerController : MonoBehaviour {
     SpriteRenderer spriteRenderer;
 
 
-    void Awake()
+    void OnEnable()
     {
         dashCoolTime = 0.01f; //대쉬 쿨타임
         backjumpCoolTime = 0.01f; //백점프 쿨타임
         jumpCount = 0; //시작부터 점프하는 것 방지
         Rdir = true;
-
+        isImmune = false;
+        isDead = false;
     }
 
     void Start () {
@@ -289,7 +290,7 @@ public class PlayerController : MonoBehaviour {
     //-------[Falling Check Function]---------
     void FallCheck()
     {
-        if(rigid.velocity.y < -0.1 && !animator.GetBool("isJumping"))
+        if((rigid.velocity.y < -0.1 && animator.GetBool("isJumping")) || rigid.velocity.y <-0.1)
         {
             isFalling = true;
             animator.SetBool("isFalling", true);

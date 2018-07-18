@@ -17,16 +17,19 @@ public class CharacterManager : MonoBehaviour {
     }
     void Update()
     {
-        if(DamagedState.GetComponent<PlayerController>().Health == 2)
+        if(DamagedState.GetComponent<PlayerController>().Health == 2 && DamagedState.activeSelf && DamagedState.GetComponent<PlayerController>().isImmune == true)
         {
             UnDamagedState.transform.position = DamagedState.transform.position;
+           
+            
             //변환동안 시간 줘야함
             UnDamagedState.SetActive(true);
             DamagedState.SetActive(false);
         }
-        if (UnDamagedState.GetComponent<PlayerController>().Health == 1)
+        if (UnDamagedState.GetComponent<PlayerController>().Health == 1 && UnDamagedState.activeSelf &&UnDamagedState.GetComponent<PlayerController>().isImmune == false)
         {
             DamagedState.transform.position = UnDamagedState.transform.position;
+
             //변환동안 시간 줘야함 - > 플레이어 바로 죽어버림
             UnDamagedState.SetActive(false);
 

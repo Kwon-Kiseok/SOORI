@@ -10,7 +10,7 @@ public class ContactDamage : MonoBehaviour {
 
     private GameObject playerObj;
 
-    void Awake()
+    void Update()
     {
         playerObj = GameObject.FindGameObjectWithTag("Player");
     }

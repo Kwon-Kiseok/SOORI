@@ -28,11 +28,6 @@ public class CameraControl : MonoBehaviour
     private Transform player;
     private Animator animator;
 
-    void Awake()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        animator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
-    }
 
     bool CheckXMargin()
     {
@@ -45,6 +40,9 @@ public class CameraControl : MonoBehaviour
 
     void Update()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        animator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
+
         //캐릭터가 보는 방향 체크
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
