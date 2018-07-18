@@ -9,6 +9,10 @@ public class PlayerController : MonoBehaviour {
     public bool isImmune = false; //현재 플레이어가 무적인지 아닌지
     public float immunityDuration = 1.5f; //무적시간이 얼마인지 나타낸다
     [SerializeField]private float immunityTime = 0f; //무적이 된 지 몇초인지 나타낸다
+    [SerializeField]private bool isDead = false;
+
+    //--Dead event elements
+    public Sprite deadSprite;
 
     //--SpriteFlicker elements
     private float flickerDuration = 0.1f; //스프라이트가 화면에 그려지거나 안그려지는 시간을 의미, 깜빡임의 시간 조절
@@ -70,12 +74,13 @@ public class PlayerController : MonoBehaviour {
         //피격무적인지 아닌지 체크
         if(this.isImmune == true)
         {
-            StartCoroutine(SpriteFlicker());
+            SpriteFlicker();
             immunityTime = immunityTime + Time.deltaTime;
 
             if(immunityTime >= immunityDuration)
             {
                 this.isImmune = false;
+                this.spriteRenderer.enabled = true;
                 Debug.Log("Imuunity has ended");
             }
         }
@@ -135,7 +140,7 @@ public class PlayerController : MonoBehaviour {
             Dash();
             Jump();
         }
-        
+
     }
 
     void LateUpdate()
@@ -297,12 +302,16 @@ public class PlayerController : MonoBehaviour {
     //-------[Take Damage Function]----------
     public void TakeDamage(int damage, bool playHitReaction)
     {
-        if (this.isImmune == false)
+        if (this.isImmune == false && isDead == false)
         {
             this.Health = this.Health - damage;
             Debug.Log("Player Health : " + this.Health.ToString());
 
-            if (playHitReaction == true)
+            if(this.Health <= 0)
+            {
+                PlayerIsDead();
+            }
+            else if (playHitReaction == true)
             {
                 Debug.Log("Hit Reaction Called");
                 PlayHitReaction();
@@ -319,29 +328,55 @@ public class PlayerController : MonoBehaviour {
     }
 
     //--------[SpriteFlicker Function]---------
-    IEnumerator SpriteFlicker()
+    void SpriteFlicker()
     {
-        int countTime = 0;
+        //int countTime = 0;
 
-        while(countTime < 10)
+        //while(countTime < 10)
+        //{
+        //    //알파값 변경 이펙트
+        //    if (countTime % 2 == 0)
+        //    {
+        //        spriteRenderer.color = new Color32(255, 255, 255, 90);
+        //    }
+        //    else
+        //        spriteRenderer.color = new Color32(255, 255, 255, 180);
+
+        //    //이 부분 항상 무적시간/10의 값이어야함 
+        //    yield return new WaitForSeconds(0.2f);
+
+        //    countTime++;
+        //}
+
+        ////알파값 변경 이펙트 종료
+        //spriteRenderer.color = new Color32(255, 255, 255, 255);
+
+        //yield return null;
+
+        if(this.flickerTime < this.flickerDuration)
         {
-            //알파값 변경 이펙트
-            if (countTime % 2 == 0)
-            {
-                spriteRenderer.color = new Color32(255, 255, 255, 90);
-            }
-            else
-                spriteRenderer.color = new Color32(255, 255, 255, 180);
-
-            //이 부분 항상 무적시간/10의 값이어야함 
-            yield return new WaitForSeconds(0.2f);
-
-            countTime++;
+            this.flickerTime = this.flickerTime + Time.deltaTime;
         }
+        else if(this.flickerTime >= this.flickerDuration)
+        {
+            spriteRenderer.enabled = !(spriteRenderer.enabled);
+            this.flickerTime = 0;
+        }
+    }
 
-        //알파값 변경 이펙트 종료
-        spriteRenderer.color = new Color32(255, 255, 255, 255);
-
-        yield return null;
+    //--------[PlayerIsDead Function]----------
+    void PlayerIsDead()
+    {
+        this.isDead = true;
+        this.spriteRenderer.sprite = deadSprite;
+        this.animator.enabled = false;
+        //this.gameObject.GetComponent<Animator>().SetTrigger("죽을때");
+        PlayerController controller = this.gameObject.GetComponent<PlayerController>();
+        controller.enabled = false;
+        rigid.velocity = new Vector2(0, 0);
+        if (Rdir == true)
+            rigid.AddForce(new Vector2(-1000, 1000));
+        else
+            rigid.AddForce(new Vector2(1000, 1000));
     }
 }

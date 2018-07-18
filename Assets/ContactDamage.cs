@@ -15,6 +15,14 @@ public class ContactDamage : MonoBehaviour {
         playerObj = GameObject.FindGameObjectWithTag("Player");
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "Player")
+        {
+            playerObj.GetComponent<PlayerController>().TakeDamage(this.damage, this.playHitReaction);
+        }
+    }
+
     void OnTriggerStay2D(Collider2D other)
     {
         if(other.tag == "Player")
