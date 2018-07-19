@@ -12,6 +12,7 @@ TagManager:
   - ObstaclePlatform
   - CheckPoint
   - Enemy
+  - Arrow
   layers:
   - Default
   - TransparentFX

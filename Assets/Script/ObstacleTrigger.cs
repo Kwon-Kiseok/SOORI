@@ -23,6 +23,10 @@ public class ObstacleTrigger : MonoBehaviour {
         {
             return;
         }
+        else if(other.tag == "Arrow")
+        {
+            return;
+        }
         else
         {
             Destroy(other.gameObject);

@@ -11,6 +11,12 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]private float immunityTime = 0f; //무적이 된 지 몇초인지 나타낸다
     [SerializeField]private bool isDead;
 
+    //--Attack elements
+    public GameObject ArrowPrefab;
+    public bool canShoot = true;
+    const float shootDelay = 0.5f;
+    float shootTimer = 0;
+
     //--Dead event elements
     public Sprite deadSprite;
 
@@ -20,7 +26,7 @@ public class PlayerController : MonoBehaviour {
 
     //--Move elements
     public float movePower = 1f;
-    private bool Rdir;
+    public bool Rdir;
 
     //--Jump elements
     public float jumpPower = 1f;
@@ -71,6 +77,9 @@ public class PlayerController : MonoBehaviour {
         AnimatorStateInfo animatorState = animator.GetCurrentAnimatorStateInfo(0);
         //떨어지는 상태 체크
         FallCheck();
+
+        //공격 발사
+        ShootControl();
 
         //피격무적인지 아닌지 체크
         if(this.isImmune == true)
@@ -381,5 +390,19 @@ public class PlayerController : MonoBehaviour {
             rigid.AddForce(new Vector2(-1000, 1000));
         else
             rigid.AddForce(new Vector2(1000, 1000));
+    }
+
+    //--------[Shooting Control Function]------
+    void ShootControl()
+    {
+        if(canShoot)
+        {
+            if(shootTimer > shootDelay && Input.GetKey(KeyCode.T))
+            {
+                Instantiate(ArrowPrefab, transform.position, Quaternion.identity);
+                shootTimer = 0f;
+            }
+            shootTimer += Time.deltaTime;
+        }
     }
 }
