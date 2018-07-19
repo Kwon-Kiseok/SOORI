@@ -38,8 +38,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1503658294852956}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -124.07, y: 15.61, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -126.42655, y: 19.18509, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3aeb1ce168921a499ebc378066843c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 20
+  Health: 2
   isImmune: 0
   immunityDuration: 2
   immunityTime: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
   jumpCount: 2
   isFalling: 0
   backjumpX: 20
-  backjumpY: 20
+  backjumpY: 5
   dashSpeed: 100
   startDashTime: 0.1
   direction: 0

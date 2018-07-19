@@ -28,6 +28,11 @@ public class CameraControl : MonoBehaviour
     private Transform player;
     private Animator animator;
 
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        animator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
+    }
 
     bool CheckXMargin()
     {
