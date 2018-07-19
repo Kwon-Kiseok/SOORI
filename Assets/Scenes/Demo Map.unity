@@ -14865,7 +14865,7 @@ Prefab:
     - target: {fileID: 114844228308187258, guid: 2d6f453ba731aea46950a91f7b98dfe3,
         type: 2}
       propertyPath: Health
-      value: 20
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114844228308187258, guid: 2d6f453ba731aea46950a91f7b98dfe3,
         type: 2}
@@ -31755,6 +31755,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1612396873}
   - component: {fileID: 1612396872}
+  - component: {fileID: 1612396875}
+  - component: {fileID: 1612396874}
   m_Layer: 0
   m_Name: "\uBCF4\uC11D"
   m_TagString: Untagged
@@ -31820,6 +31822,32 @@ Transform:
   m_Father: {fileID: 857277823}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1612396874
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1612396871}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.7
+--- !u!114 &1612396875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1612396871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82c0814ced7d2334789d9642df72cbe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1612535310 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4387862856586738, guid: 394e66982b0b95543b348a7d0b750b0e,

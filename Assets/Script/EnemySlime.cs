@@ -13,30 +13,42 @@ public class EnemySlime : EnemyController {
     private float Distance;
     //몬스터의 감지 범위
     public float TraceRange = 1f;
+    //피격 시 체크
+    [SerializeField] private bool isHit = false;
+    //경직 시간
+    public float stunTime;
+
+    public int Health = 3;
 
     [SerializeField] private bool isTracing = false;
 
     void Start()
     {
-        rigid = this.gameObject.GetComponent<Rigidbody2D>();
-        playerObj = GameObject.FindGameObjectWithTag("Player");
+        rigid = this.gameObject.GetComponent<Rigidbody2D>();       
     }
 
     void Update()
     {
-        Distance = Vector2.Distance(transform.position, playerObj.transform.position);    
+        playerObj = GameObject.FindGameObjectWithTag("Player");
+        Distance = Vector2.Distance(transform.position, playerObj.transform.position);
+        
+        if(isHit == true)
+        {
+            StartCoroutine("isHitting");
+        }
     }
 
     void FixedUpdate()
     {
         //기본형 이동
-        if (EnemyType == 0)
+        if (EnemyType == 0 && isHit == false)
         {
             Move();
         }
         //추적형 이동
-        else if(EnemyType == 1)
+        else if(EnemyType == 1 && isHit == false)
         {
+
             //추적 범위 내 일 경우
             if(Distance < TraceRange)
             {
@@ -64,6 +76,17 @@ public class EnemySlime : EnemyController {
     }
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.tag == "Arrow" && Health > 0)
+        {
+            isHit = true;
+            Destroy(other.gameObject);
+            Health -= 1;           
+        }
+        if (Health == 0)
+        {
+            Destroy(gameObject);
+        }
+
         //플레이어 부딪히면 돌려줌
         if(other.tag == "Player")
         {
@@ -73,7 +96,7 @@ public class EnemySlime : EnemyController {
         else if(other.tag == "ObstaclePlatform")
         {
             Flip();
-        }
+        }       
     }
 
     void Move()
@@ -86,5 +109,11 @@ public class EnemySlime : EnemyController {
         {
             rigid.velocity = new Vector2(maxSpeed * -1, this.rigid.velocity.y);
         }
+    }
+
+    IEnumerator isHitting()
+    {
+        yield return new WaitForSeconds(stunTime);
+        isHit = false;
     }
 }

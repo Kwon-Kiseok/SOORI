@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 212219358348074326}
   - component: {fileID: 50226129904455204}
   - component: {fileID: 58359799018768432}
-  - component: {fileID: 61259499763386720}
   - component: {fileID: 114649718207662396}
   m_Layer: 9
   m_Name: enemySlime_Trace
@@ -109,7 +108,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: -1.14, y: 0}
   serializedVersion: 2
-  m_Radius: 4.14
+  m_Radius: 4.77
 --- !u!58 &58953127357024504
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -125,31 +124,6 @@ CircleCollider2D:
   m_Offset: {x: -1.22, y: 0}
   serializedVersion: 2
   m_Radius: 4.77
---- !u!61 &61259499763386720
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1404655884561440}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.1, y: -0.2}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 19.466667, y: 16.133333}
-    newSize: {x: 19.466667, y: 16.133333}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 13.1, y: 8.39}
-  m_EdgeRadius: 0
 --- !u!114 &114567523467709134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,6 +152,9 @@ MonoBehaviour:
   maxSpeed: 3
   EnemyType: 1
   TraceRange: 30
+  isHit: 0
+  stunTime: 0.15
+  Health: 3
   isTracing: 0
 --- !u!212 &212219358348074326
 SpriteRenderer:

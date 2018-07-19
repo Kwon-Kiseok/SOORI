@@ -17,11 +17,13 @@ public class CharacterManager : MonoBehaviour {
     }
     void Update()
     {
-        if(DamagedState.GetComponent<PlayerController>().Health == 2 && DamagedState.activeSelf && DamagedState.GetComponent<PlayerController>().isImmune == true)
+        if(DamagedState.GetComponent<PlayerController>().Health == 2 && DamagedState.activeSelf )//&& DamagedState.GetComponent<PlayerController>().isImmune == true)
         {
             UnDamagedState.transform.position = DamagedState.transform.position;
-           
-            
+
+            UnDamagedState.GetComponent<PlayerController>().Health = 2;
+            DamagedState.GetComponent<PlayerController>().Health = 1;
+
             //변환동안 시간 줘야함
             UnDamagedState.SetActive(true);
             DamagedState.SetActive(false);

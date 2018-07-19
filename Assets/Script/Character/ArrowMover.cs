@@ -40,13 +40,11 @@ public class ArrowMover : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
+
+        //플랫폼에 부딪힐 경우 화살 사라짐
         if (other.gameObject.layer == 8)
         {
             Destroy(gameObject);
-        }
-        else if(other.gameObject.tag == "Enemy")
-        {
-            Destroy(other);
         }
     }
 
