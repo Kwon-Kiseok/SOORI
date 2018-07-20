@@ -73,6 +73,30 @@ public class EnemySlime : EnemyController {
                 Move();
             }
         }
+
+        //날아다니는 추적형
+        else if(EnemyType == 2 && isHit == false)
+        {
+            //추적 범위 내 일 경우
+            if(Distance < TraceRange)
+            {
+                //대상이 보다 오른쪽에 있을 경우
+                if(playerObj.transform.position.x > transform.position.x)
+                {
+                    transform.localScale = new Vector3(-1, 1, 1);
+                }
+                else if(playerObj.transform.position.x < transform.position.x)
+                {
+                    transform.localScale = new Vector3(1, 1, 1);
+                }
+                isTracing = true;
+                transform.position = Vector2.MoveTowards(transform.position, playerObj.transform.position, maxSpeed * Time.deltaTime);
+            }
+            else
+            {
+                isTracing = false;                
+            }
+        }
     }
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -80,7 +104,7 @@ public class EnemySlime : EnemyController {
         {
             isHit = true;
             Destroy(other.gameObject);
-            Health -= 1;           
+            Health -= playerObj.GetComponent<PlayerController>().AttackDamage;           
         }
         if (Health == 0)
         {

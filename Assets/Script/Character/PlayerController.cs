@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour {
     public bool canShoot = true;
     const float shootDelay = 0.5f;
     float shootTimer = 0;
+    public int AttackDamage = 1;
+    
 
     //--Dead event elements
     public Sprite deadSprite;
@@ -254,8 +256,10 @@ public class PlayerController : MonoBehaviour {
     void Dash()
     {
         if (dashCoolTime > 0)
+        {
             return;
-
+        }
+        
             if (direction == 0)
             {
                 if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && Input.GetKeyDown(KeyCode.LeftShift))
@@ -397,7 +401,8 @@ public class PlayerController : MonoBehaviour {
     {
         if(canShoot)
         {
-            if(shootTimer > shootDelay && Input.GetKey(KeyCode.T))
+            //대쉬중 / 백점프 중에 공격 막아줘야 함
+            if(shootTimer > shootDelay && Input.GetKey(KeyCode.T) )
             {
                 Instantiate(ArrowPrefab, transform.position, Quaternion.identity);
                 shootTimer = 0f;
