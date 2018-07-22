@@ -7243,6 +7243,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 1401082221987870, guid: cb72e2aaee180104bb7962c415e493a9, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cb72e2aaee180104bb7962c415e493a9, type: 2}
   m_IsPrefabParent: 0
@@ -14709,22 +14713,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 13
       objectReference: {fileID: 0}
-    - target: {fileID: 114844228308187258, guid: 2d6f453ba731aea46950a91f7b98dfe3,
-        type: 2}
-      propertyPath: isImmune
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114844228308187258, guid: 2d6f453ba731aea46950a91f7b98dfe3,
-        type: 2}
-      propertyPath: Health
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114844228308187258, guid: 2d6f453ba731aea46950a91f7b98dfe3,
-        type: 2}
-      propertyPath: ArrowPrefab
-      value: 
-      objectReference: {fileID: 1341043845304260, guid: 04aa940568de0ff4ab308909b460ebe5,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2d6f453ba731aea46950a91f7b98dfe3, type: 2}
   m_IsPrefabParent: 0
@@ -24458,11 +24446,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1503658294852956, guid: 2d6f453ba731aea46950a91f7b98dfe3,
     type: 2}
   m_PrefabInternal: {fileID: 746849703}
---- !u!4 &1244565179 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4245863745737096, guid: 2d6f453ba731aea46950a91f7b98dfe3,
-    type: 2}
-  m_PrefabInternal: {fileID: 746849703}
 --- !u!4 &1246930761 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4081546900651434, guid: f322665f18bc52a46a2ffa71fc45b967,
@@ -26856,34 +26839,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!1 &1369769906
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1369769907}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1369769907
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1369769906}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.83, y: -0.16, z: -0.03343002}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1244565179}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1378584148
 Prefab:
   m_ObjectHideFlags: 0
@@ -39343,12 +39298,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 14
       objectReference: {fileID: 0}
-    - target: {fileID: 114326506374396116, guid: 3565bf818db51204d935132a1020cf35,
-        type: 2}
-      propertyPath: ArrowPrefab
-      value: 
-      objectReference: {fileID: 1341043845304260, guid: 04aa940568de0ff4ab308909b460ebe5,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3565bf818db51204d935132a1020cf35, type: 2}
   m_IsPrefabParent: 0
@@ -40805,7 +40754,7 @@ GameObject:
   - component: {fileID: 2090579914}
   - component: {fileID: 2090579913}
   - component: {fileID: 2090579912}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CheckPoint (1)
   m_TagString: CheckPoint
   m_Icon: {fileID: 0}

@@ -13,10 +13,11 @@ public class PlayerController : MonoBehaviour {
 
     //--Attack elements
     public GameObject ArrowPrefab;
-    public bool canShoot = true;
+    public bool canShoot = false;
     const float shootDelay = 0.5f;
     float shootTimer = 0;
     public int AttackDamage = 1;
+    
     
 
     //--Dead event elements
@@ -399,7 +400,7 @@ public class PlayerController : MonoBehaviour {
     //--------[Shooting Control Function]------
     void ShootControl()
     {
-        if(canShoot)
+        if(canShoot == true)
         {
             //대쉬중 / 백점프 중에 공격 막아줘야 함
             if(shootTimer > shootDelay && Input.GetKey(KeyCode.T) )
@@ -410,4 +411,5 @@ public class PlayerController : MonoBehaviour {
             shootTimer += Time.deltaTime;
         }
     }
+
 }
