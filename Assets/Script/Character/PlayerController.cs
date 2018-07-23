@@ -14,10 +14,10 @@ public class PlayerController : MonoBehaviour {
     //--Attack elements
     public GameObject ArrowPrefab;
     public bool canShoot = true;
-    const float shootDelay = 0.5f;
+    public float shootDelay;
     float shootTimer = 0;
     public int AttackDamage = 1;
-    
+    [SerializeField] private bool isHolding = false;
     
 
     //--Dead event elements
@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour {
     void Move()
     {
         //캐릭터 공격 애니메이션 동안은 이동 불가
-        if (animatorState.IsName("SOORI_ATTACK"))
+        if (animatorState.IsName("SOORI_SHOT_HOLD"))
             return;
 
         Vector3 moveVelocity = Vector3.zero;
@@ -407,31 +407,45 @@ public class PlayerController : MonoBehaviour {
     //--------[Shooting Control Function]------
     void ShootControl()
     {
-        if(canShoot == true)
+        if (canShoot == true)
         {
-            //점프 사격 애니메이션
-            if (animator.GetBool("isJumping"))
+            //처음 버튼 클릭하고 공격자세 취하기 까지 애니메이션
+            if (shootDelay > shootTimer && Input.GetMouseButtonDown(0))
             {
-                if (shootTimer > shootDelay && Input.GetKey(KeyCode.T))
+                animator.SetBool("SHOT_BEFORE", true);
+            }
+
+            //버튼 누르고 있으면서 조준 해주는 부분
+            if (Input.GetMouseButton(0))
+            {
+                animator.SetBool("SHOT_HOLD", true);
+
+                //조준 타이머? 데미지 정하는 함수 실행해줘야함
+                //목표 대상 불러와줘야 함
+                //목표 대상 변경 할 수 있어야 함
+            }
+
+            //버튼 뗀 후 발사 애니메이션 나가는 부분
+            if (shootDelay > shootTimer && Input.GetMouseButtonUp(0) && animatorState.IsName("SOORI_SHOT_HOLD") )
+            {
+                animator.SetBool("SHOT_BEFORE", false);
+                animator.SetBool("SHOT_HOLD", false);
+                animator.SetTrigger("SHOT_AFTER");
+                isHolding = false;
+                Instantiate(ArrowPrefab, transform.position, Quaternion.identity);
+            }
+
+            //클릭하고 바로 뗄 경우 예외 처리 하는 부분
+            else if(Input.GetMouseButtonUp(0) && !animatorState.IsName("SOORI_SHOT_HOLD"))
+            {
+                animator.SetBool("SHOT_BEFORE", false);
+                animator.SetBool("SHOT_HOLD", false); 
+                //애니메이션 무한반복 되는 현상 강제정지
+                if(animatorState.IsName("SOORI_SHOT_BEFORE"))
                 {
-                    Instantiate(ArrowPrefab, transform.position, Quaternion.identity);
-                    shootTimer = 0f;
-                    //공격 애니메이션 트리거 
-                    animator.SetTrigger("Shoot");
+                    animator.Play("SOORI_IDLE");
                 }
             }
-            else
-            {
-                //대쉬중 / 백점프 중에 공격 막아줘야 함
-                if (shootTimer > shootDelay && Input.GetKey(KeyCode.T))
-                {
-                    Instantiate(ArrowPrefab, transform.position, Quaternion.identity);
-                    shootTimer = 0f;
-                    //공격 애니메이션 트리거 
-                    animator.SetTrigger("Shoot");
-                }
-            }
-            shootTimer += Time.deltaTime;
         }
     }
 

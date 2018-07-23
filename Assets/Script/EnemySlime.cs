@@ -132,23 +132,26 @@ public class EnemySlime : EnemyController {
             Destroy(gameObject);
         }
 
-        //방해물과 부딪히면 돌려줌
-        if(other.tag == "ObstaclePlatform")
+        //방해물과 부딪히면 돌려줌, 돌진 시는 예외
+        if(other.tag == "ObstaclePlatform" && rushAttack == false)
         {
             Flip();
-        }       
+        }
     }
 
     void Move()
     {
+        Vector3 moveVelocity = Vector3.zero;
+
         if (this.isFacingRight == true)
         {
-            rigid.velocity = new Vector2(maxSpeed, this.rigid.velocity.y);
+            moveVelocity = Vector3.right;
         }
         else
         {
-            rigid.velocity = new Vector2(maxSpeed * -1, this.rigid.velocity.y);
+            moveVelocity = Vector3.left;
         }
+        transform.position += moveVelocity * maxSpeed * Time.deltaTime;
     }
 
 
