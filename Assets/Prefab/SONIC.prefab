@@ -169,8 +169,13 @@ MonoBehaviour:
   immunityDuration: 2
   immunityTime: 0
   isDead: 0
+  ArrowPrefab: {fileID: 1341043845304260, guid: 04aa940568de0ff4ab308909b460ebe5,
+    type: 2}
+  canShoot: 1
+  AttackDamage: 1
   deadSprite: {fileID: 21300160, guid: 5350e5f27b0edb44da462e9d8174bc27, type: 3}
   movePower: 20
+  Rdir: 0
   jumpPower: 30
   jumpCount: 2
   isFalling: 0

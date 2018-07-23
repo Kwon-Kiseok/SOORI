@@ -18,6 +18,13 @@ public class EnemySlime : EnemyController {
     //경직 시간
     public float stunTime;
 
+    //돌진 공격 
+    public bool rushAttack = false;
+    public float rushX = 1f;
+    public float rushY = 1f;
+    public float rushRate;
+    private float nextRush;
+
     public int Health = 3;
 
     [SerializeField] private bool isTracing = false;
@@ -31,8 +38,10 @@ public class EnemySlime : EnemyController {
     {
         playerObj = GameObject.FindGameObjectWithTag("Player");
         Distance = Vector2.Distance(transform.position, playerObj.transform.position);
-        
-        if(isHit == true)
+
+        Raycasting();
+
+        if (isHit == true)
         {
             StartCoroutine("isHitting");
         }
@@ -135,6 +144,23 @@ public class EnemySlime : EnemyController {
         }
     }
 
+    public void RushAttack()
+    {
+        if(rushAttack == true && Time.time > nextRush)
+        {
+            if(this.isFacingRight == true)
+            {
+                Vector2 rushForce = new Vector2(rushX, rushY);
+                rigid.AddForce(rushForce, ForceMode2D.Impulse);
+            }
+            else
+            {
+                Vector2 rushForce = new Vector2(-rushX, rushY);
+                rigid.AddForce(rushForce, ForceMode2D.Impulse);
+            }
+            nextRush = Time.time + rushRate;
+        }        
+    }
     IEnumerator isHitting()
     {
         yield return new WaitForSeconds(stunTime);
