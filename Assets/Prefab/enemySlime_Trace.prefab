@@ -140,7 +140,7 @@ Transform:
   m_GameObject: {fileID: 1404655884561440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 39.1, y: 11.9, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4440979630701744}
   - {fileID: 4038747276310498}
@@ -205,7 +205,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1404655884561440}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0fff25268a8c43c449a7f47a941037a6, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFacingRight: 0
-  maxSpeed: -3
+  maxSpeed: 3
   sightStart: {fileID: 4038747276310498}
   sightEnd: {fileID: 4767571672799454}
   spotted: 0
@@ -257,8 +257,9 @@ MonoBehaviour:
   isHit: 0
   stunTime: 0.15
   rushAttack: 0
-  rushX: 30
+  rushX: 40
   rushY: 5
+  rushRate: 5
   Health: 3
   isTracing: 0
 --- !u!212 &212219358348074326

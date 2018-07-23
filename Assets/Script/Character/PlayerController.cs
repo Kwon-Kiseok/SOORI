@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
 
     //--Attack elements
     public GameObject ArrowPrefab;
-    public bool canShoot = false;
+    public bool canShoot = true;
     const float shootDelay = 0.5f;
     float shootTimer = 0;
     public int AttackDamage = 1;
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour {
     //--BackJump elements
     public float backjumpX = 1f;
     public float backjumpY = 1f;
-    bool isBackjump = false;
+    bool isBackStep = false;
     private float backjumpCoolTime;
 
     //--Dash elements
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour {
     Animator animator;
     Vector3 movement;
     SpriteRenderer spriteRenderer;
-
+    AnimatorStateInfo animatorState;
 
     void OnEnable()
     {
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Update () {
 
-        AnimatorStateInfo animatorState = animator.GetCurrentAnimatorStateInfo(0);
+        animatorState = animator.GetCurrentAnimatorStateInfo(0);
         //떨어지는 상태 체크
         FallCheck();
 
@@ -136,10 +136,10 @@ public class PlayerController : MonoBehaviour {
         //백점프
         if(Input.GetKeyDown(KeyCode.LeftShift) && Input.GetAxisRaw("Horizontal") == 0 )
         {
-            if (animator.GetBool("isJumping") || animatorState.IsName("SONIC_DASH") || animator.GetBool("isBackJump") || animatorState.IsName("D_SONIC_DASH"))
+            if (animator.GetBool("isJumping") || animatorState.IsName("SONIC_DASH") || animator.GetBool("isBackStep") || animatorState.IsName("SOORI_DASH"))
                 return;
-            isBackjump = true;
-            animator.SetBool("isBackJump", true);
+            isBackStep = true;
+            animator.SetBool("isBackStep", true);
             BackJump();
         }        
 	}
@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate()
     {
         //백점프 중에는 행동 불가
-        if (!animator.GetBool("isBackJump"))
+        if (!animator.GetBool("isBackStep"))
         {
             Move();
             Dash();
@@ -167,6 +167,9 @@ public class PlayerController : MonoBehaviour {
     //-------[Moving Function]---------------
     void Move()
     {
+        //캐릭터 공격 애니메이션 동안은 이동 불가
+        if (animatorState.IsName("SOORI_ATTACK"))
+            return;
 
         Vector3 moveVelocity = Vector3.zero;
 
@@ -198,24 +201,24 @@ public class PlayerController : MonoBehaviour {
     //-------[BackJump Function]------------
     void BackJump()
     {
-        if (!isBackjump)
+        if (!isBackStep)
             return;
 
         rigid.velocity = Vector2.zero;
 
-        if(Rdir == true && animator.GetBool("isBackJump"))
+        if(Rdir == true && animator.GetBool("isBackStep"))
         {
             Vector2 backjumpVelocity = new Vector2(-backjumpX, backjumpY);
             rigid.AddForce(backjumpVelocity, ForceMode2D.Impulse);
         }
-        else if(Rdir == false && animator.GetBool("isBackJump"))
+        else if(Rdir == false && animator.GetBool("isBackStep"))
         {
             Vector2 backjumpVelocity = new Vector2(backjumpX, backjumpY);
             rigid.AddForce(backjumpVelocity, ForceMode2D.Impulse);
         }
 
         backjumpCoolTime = 2f;
-        isBackjump = false;
+        isBackStep = false;
         
     }
 
@@ -226,7 +229,7 @@ public class PlayerController : MonoBehaviour {
         if(other.gameObject.layer == 8)
         {
             animator.SetBool("isJumping", false);
-            animator.SetBool("isBackJump", false);
+            animator.SetBool("isBackStep", false);
            // animator.SetBool("isFalling", false);
             jumpCount = 2;
         }
@@ -240,6 +243,10 @@ public class PlayerController : MonoBehaviour {
         if(other.gameObject.tag == "MovingPlatform")
         {
             transform.parent = other.transform;
+        }
+        if (other.gameObject.layer == 8)
+        {
+            animator.SetBool("isBackStep", false);
         }
     }
     void OnTriggerExit2D(Collider2D other)
@@ -402,11 +409,27 @@ public class PlayerController : MonoBehaviour {
     {
         if(canShoot == true)
         {
-            //대쉬중 / 백점프 중에 공격 막아줘야 함
-            if(shootTimer > shootDelay && Input.GetKey(KeyCode.T) )
+            //점프 사격 애니메이션
+            if (animator.GetBool("isJumping"))
             {
-                Instantiate(ArrowPrefab, transform.position, Quaternion.identity);
-                shootTimer = 0f;
+                if (shootTimer > shootDelay && Input.GetKey(KeyCode.T))
+                {
+                    Instantiate(ArrowPrefab, transform.position, Quaternion.identity);
+                    shootTimer = 0f;
+                    //공격 애니메이션 트리거 
+                    animator.SetTrigger("Shoot");
+                }
+            }
+            else
+            {
+                //대쉬중 / 백점프 중에 공격 막아줘야 함
+                if (shootTimer > shootDelay && Input.GetKey(KeyCode.T))
+                {
+                    Instantiate(ArrowPrefab, transform.position, Quaternion.identity);
+                    shootTimer = 0f;
+                    //공격 애니메이션 트리거 
+                    animator.SetTrigger("Shoot");
+                }
             }
             shootTimer += Time.deltaTime;
         }

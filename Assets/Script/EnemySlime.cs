@@ -25,13 +25,17 @@ public class EnemySlime : EnemyController {
     public float rushRate;
     private float nextRush;
 
+    //몬스터 원래 위치
+    private Vector2 originTransform;
+
     public int Health = 3;
 
     [SerializeField] private bool isTracing = false;
 
     void Start()
     {
-        rigid = this.gameObject.GetComponent<Rigidbody2D>();       
+        rigid = this.gameObject.GetComponent<Rigidbody2D>();
+        originTransform = transform.position;
     }
 
     void Update()
@@ -65,11 +69,13 @@ public class EnemySlime : EnemyController {
                 if(playerObj.transform.position.x > transform.position.x)
                 {
                     transform.localScale = new Vector3(-1, 1, 1);
+                    isFacingRight = true;
                 }
                 //대상이 보다 왼쪽에 있을 경우
                 else if(playerObj.transform.position.x < transform.position.x)
                 {
                     transform.localScale = new Vector3(1, 1, 1);
+                    isFacingRight = false;
                 }
                 isTracing = true;
                 transform.position = Vector2.MoveTowards(transform.position, playerObj.transform.position, maxSpeed * Time.deltaTime);
@@ -93,17 +99,23 @@ public class EnemySlime : EnemyController {
                 if(playerObj.transform.position.x > transform.position.x)
                 {
                     transform.localScale = new Vector3(-1, 1, 1);
+                    isFacingRight = true;
                 }
                 else if(playerObj.transform.position.x < transform.position.x)
                 {
                     transform.localScale = new Vector3(1, 1, 1);
+                    isFacingRight = false;
                 }
                 isTracing = true;
                 transform.position = Vector2.MoveTowards(transform.position, playerObj.transform.position, maxSpeed * Time.deltaTime);
             }
-            else
+            //추적 범위 밖 일 경우
+            //대쉬 이동 속도 초기화 및 몬스터 원래 위치로 돌아감
+            else if(Distance > TraceRange)
             {
-                isTracing = false;                
+                isTracing = false;
+                rigid.velocity = Vector2.zero;
+                transform.position = Vector2.MoveTowards(transform.position, originTransform, (maxSpeed - 10f) * Time.deltaTime);
             }
         }
     }
@@ -120,13 +132,8 @@ public class EnemySlime : EnemyController {
             Destroy(gameObject);
         }
 
-        //플레이어 부딪히면 돌려줌
-        if(other.tag == "Player")
-        {
-            Flip();
-        }
         //방해물과 부딪히면 돌려줌
-        else if(other.tag == "ObstaclePlatform")
+        if(other.tag == "ObstaclePlatform")
         {
             Flip();
         }       
@@ -144,19 +151,35 @@ public class EnemySlime : EnemyController {
         }
     }
 
+
+    //몬스터 돌진 어택
     public void RushAttack()
     {
         if(rushAttack == true && Time.time > nextRush)
         {
-            if(this.isFacingRight == true)
+            if (EnemyType == 2)
             {
-                Vector2 rushForce = new Vector2(rushX, rushY);
-                rigid.AddForce(rushForce, ForceMode2D.Impulse);
+                if(isFacingRight == true)
+                {
+                    rigid.velocity = Vector2.right * rushX;
+                }
+                else
+                {
+                    rigid.velocity = Vector2.left * rushX;
+                }
             }
             else
             {
-                Vector2 rushForce = new Vector2(-rushX, rushY);
-                rigid.AddForce(rushForce, ForceMode2D.Impulse);
+                if (this.isFacingRight == true)
+                {
+                    Vector2 rushForce = new Vector2(rushX, rushY);
+                    rigid.AddForce(rushForce, ForceMode2D.Impulse);
+                }
+                else
+                {
+                    Vector2 rushForce = new Vector2(-rushX, rushY);
+                    rigid.AddForce(rushForce, ForceMode2D.Impulse);
+                }
             }
             nextRush = Time.time + rushRate;
         }        
