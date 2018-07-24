@@ -189,7 +189,15 @@ public class EnemySlime : EnemyController {
     }
     IEnumerator isHitting()
     {
+        //Renderer r = this.GetComponent<Renderer>();
+        //Material m = r.material;
+        //m.color = Color.red;
+        //r.material = m;
+
         yield return new WaitForSeconds(stunTime);
         isHit = false;
+
+        //m.color = Color.white;
+        //r.material = m;
     }
 }

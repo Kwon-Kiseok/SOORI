@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour {
     public int AttackDamage = 1;
     [SerializeField] private bool isHolding = false;
     
+    //--Select Target elements
+
 
     //--Dead event elements
     public Sprite deadSprite;
@@ -230,7 +232,7 @@ public class PlayerController : MonoBehaviour {
         {
             animator.SetBool("isJumping", false);
             animator.SetBool("isBackStep", false);
-           // animator.SetBool("isFalling", false);
+            animator.SetBool("isFalling", false);
             jumpCount = 2;
         }
         
@@ -449,4 +451,5 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    
 }
