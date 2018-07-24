@@ -6,6 +6,8 @@ public class EnemySlime : EnemyController {
 
     private Rigidbody2D rigid;
     private GameObject playerObj;
+    Animator animator;
+    AnimatorStateInfo animatorState;
 
     //유닛의 타입 결정 0 = 기본 1 = 추적형
     public int EnemyType;
@@ -37,12 +39,14 @@ public class EnemySlime : EnemyController {
 
     void Start()
     {
+        animator = gameObject.GetComponent<Animator>();
         rigid = this.gameObject.GetComponent<Rigidbody2D>();
         originTransform = transform.position;
     }
 
     void Update()
     {
+        animatorState = animator.GetCurrentAnimatorStateInfo(0);
         playerObj = GameObject.FindGameObjectWithTag("Player");
         Distance = Vector2.Distance(transform.position, playerObj.transform.position);
 
@@ -56,13 +60,17 @@ public class EnemySlime : EnemyController {
 
     void FixedUpdate()
     {
-        //기본형 이동
+        //--------------------------------------------------01 기본형 이동-----------------------------------------------
         if (EnemyType == 0 && isHit == false)
         {
             Move();
         }
-        //추적형 이동
-        else if(EnemyType == 1 && isHit == false)
+
+
+
+
+        //--------------------------------------------------02 추적형 이동-----------------------------------------------
+        else if (EnemyType == 1 && isHit == false)
         {
 
             //추적 범위 내 일 경우
@@ -92,8 +100,10 @@ public class EnemySlime : EnemyController {
             }
         }
 
-        //날아다니는 추적형
-        else if(EnemyType == 2 && isHit == false)
+
+
+        //--------------------------------------------------03 날아다니는 추적형-----------------------------------------------
+        else if (EnemyType == 2 && isHit == false)
         {
             //추적 범위 내 일 경우
             if(Distance < TraceRange)
@@ -121,6 +131,12 @@ public class EnemySlime : EnemyController {
                 transform.position = Vector2.MoveTowards(transform.position, originTransform, (maxSpeed - 10f) * Time.deltaTime);
             }
         }
+
+
+
+
+
+
     }
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -135,15 +151,21 @@ public class EnemySlime : EnemyController {
             Destroy(gameObject);
         }
 
-        //방해물과 부딪히면 돌려줌, 돌진 시는 예외
-        if(other.tag == "ObstaclePlatform" && rushAttack == false)
+        //방해물과 부딪히면 돌려줌
+        if(other.tag == "ObstaclePlatform")
         {
+            if(isFacingRight == true)
+                rigid.AddForce(new Vector2(-5, 0), ForceMode2D.Impulse);
+            else 
+                rigid.AddForce(new Vector2(5, 0), ForceMode2D.Impulse);
             Flip();
         }
     }
-
     void Move()
     {
+        if (animatorState.IsName("01_SLIME_ATTACK"))
+            animator.SetInteger("SLIMESTATE", 0);
+
         Vector3 moveVelocity = Vector3.zero;
 
         if (this.isFacingRight == true)
@@ -178,15 +200,20 @@ public class EnemySlime : EnemyController {
             {
                 if (this.isFacingRight == true)
                 {
+                    //돌진 애니메이션
+                    animator.SetInteger("SLIMESTATE", 1);
                     Vector2 rushForce = new Vector2(rushX, rushY);
                     rigid.AddForce(rushForce, ForceMode2D.Impulse);
                 }
                 else
                 {
+                    //돌진 애니메이션
+                    animator.SetInteger("SLIMESTATE", 1);
                     Vector2 rushForce = new Vector2(-rushX, rushY);
                     rigid.AddForce(rushForce, ForceMode2D.Impulse);
                 }
             }
+
             nextRush = Time.time + rushRate;
         }        
     }
@@ -203,10 +230,4 @@ public class EnemySlime : EnemyController {
         //m.color = Color.white;
         //r.material = m;
     }
-
-    void OnWillRenderObject()
-    {
-        isVisible = true;
-    }
-
 }

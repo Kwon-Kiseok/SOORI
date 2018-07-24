@@ -28,8 +28,10 @@ public class CameraControl : MonoBehaviour
     private Transform player;
     private Animator animator;
 
+    AnimatorStateInfo animatorState;
+
     void Start()
-    {
+    {      
         player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
     }
@@ -57,7 +59,7 @@ public class CameraControl : MonoBehaviour
         {
             Rdir = false;
         }
-        AnimatorStateInfo animatorState = animator.GetCurrentAnimatorStateInfo(0);
+        animatorState = animator.GetCurrentAnimatorStateInfo(0);
         if(animatorState.IsName("SONIC_IDLE") || animatorState.IsName("D_SONIC_IDLE"))
         {
             downInput = true;

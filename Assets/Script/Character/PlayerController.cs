@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour {
     float shootTimer = 0;
     public int AttackDamage = 1;
     [SerializeField] private bool isHolding = false;
+    private bool isJumpShot = false;
 
     //--Select Target elements
     public ClickManager cm;
@@ -230,6 +231,7 @@ public class PlayerController : MonoBehaviour {
         Debug.Log("Attach : " + other.gameObject.layer);
         if(other.gameObject.layer == 8)
         {
+            isJumpShot = false;
             animator.SetBool("isJumping", false);
             animator.SetBool("isBackStep", false);
             animator.SetBool("isFalling", false);
@@ -265,11 +267,10 @@ public class PlayerController : MonoBehaviour {
     //-------[Dash Function]---------------
     void Dash()
     {
-        if (dashCoolTime > 0)
+        if (dashCoolTime > 0 || isJumpShot == true)
         {
             return;
-        }
-        
+        }       
             if (direction == 0)
             {
                 if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && Input.GetKeyDown(KeyCode.LeftShift))
@@ -412,13 +413,18 @@ public class PlayerController : MonoBehaviour {
         if (canShoot == true)
         {
             //처음 버튼 클릭하고 공격자세 취하기 까지 애니메이션
-            if (shootDelay > shootTimer && Input.GetMouseButtonDown(0))
+            if (shootDelay > shootTimer && Input.GetMouseButtonDown(0) && !animatorState.IsName("SOORI_JUMP") && !animatorState.IsName("SOORI_WALK") && !animatorState.IsName("SOORI_JUMPSHOT"))
             {
                 animator.SetBool("SHOT_BEFORE", true);
             }
+            //애니메이션 무한 재생 버그방지용
+            if(animator.GetBool("SHOT_BEFORE") && Input.GetMouseButtonUp(0))
+            {
+                animator.SetBool("SHOT_BEFORE", false);
+            }
 
-            //버튼 누르고 있으면서 조준 해주는 부분
-            if (Input.GetMouseButton(0))
+            //서있을 때 버튼 누르고 있으면서 조준 해주는 부분
+            if (Input.GetMouseButton(0) && animatorState.IsName("SOORI_SHOT_BEFORE") && !animatorState.IsName("SOORI_JUMP"))
             {
                 animator.SetBool("SHOT_HOLD", true);
 
@@ -440,6 +446,18 @@ public class PlayerController : MonoBehaviour {
                 else
                     return;
             }
+
+            //점프 샷
+            if(animatorState.IsName("SOORI_JUMP") && Input.GetMouseButtonUp(0))
+            {
+                isJumpShot = true;
+                animator.SetTrigger("SHOT_JUMP");
+                if (ArrowPrefab.GetComponent<ArrowMover>().targeting() != null)
+                    Instantiate(ArrowPrefab, transform.position, Quaternion.identity);
+                else
+                    return;
+            }
+
 
             //클릭하고 바로 뗄 경우 예외 처리 하는 부분
             else if(Input.GetMouseButtonUp(0) && !animatorState.IsName("SOORI_SHOT_HOLD"))

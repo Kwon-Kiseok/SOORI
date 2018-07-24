@@ -221,19 +221,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFacingRight: 0
-  maxSpeed: 20
+  maxSpeed: 10
   sightStart: {fileID: 4458005611053698}
   sightEnd: {fileID: 4465980903820480}
   spotted: 0
   SurpriseMark: {fileID: 1435261326782784}
   EnemyType: 2
-  TraceRange: 30
+  TraceRange: 70
   isHit: 0
   stunTime: 0.05
   rushAttack: 0
-  rushX: 20
+  rushX: 15
   rushY: 1
   rushRate: 5
+  isVisible: 0
   Health: 3
   isTracing: 0
 --- !u!212 &212920793316546102

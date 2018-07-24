@@ -145,6 +145,7 @@ MonoBehaviour:
   shootDelay: 5
   AttackDamage: 1
   isHolding: 0
+  cm: {fileID: 0}
   deadSprite: {fileID: 0}
   movePower: 20
   Rdir: 0

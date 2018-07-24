@@ -260,7 +260,8 @@ MonoBehaviour:
   rushX: 40
   rushY: 5
   rushRate: 5
-  Health: 20
+  isVisible: 0
+  Health: 8
   isTracing: 0
 --- !u!212 &212219358348074326
 SpriteRenderer:
