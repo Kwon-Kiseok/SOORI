@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class ArrowMover : MonoBehaviour {
 
+    public Transform tempPos;
     public float speed = 1f;
     private bool isRight = true;
     private Rigidbody2D rigid = null;
-    public PlayerController playerObj = null;
-    private GameObject[] targetObjs; 
+    private PlayerController playerObj = null;
+
+
 	// Use this for initialization
 	void Start () {
+        
         playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-
+        
         rigid = GetComponent<Rigidbody2D>();
         Destroy(gameObject, 5);
 
@@ -27,26 +30,25 @@ public class ArrowMover : MonoBehaviour {
 	}
     void Update()
     {
-        //float moveX = speed * Time.deltaTime;
 
-        FindClosestEnemy();
-
-        if (isRight == true)
+        //플레이어가 오른쪽을 보고 있고 타겟된 몬스터 포지션이 플레이어보다 오른쪽에 있어야 함
+        if (isRight == true && targeting().position.x > playerObj.transform.position.x)
         {
-            //transform.Translate(moveX, 0, 0);
-            transform.position = Vector2.MoveTowards(transform.position, FindClosestEnemy().transform.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, targeting().position, speed * Time.deltaTime);
         }
-        else if (isRight == false)
+        //플레이어가 왼쪽을 보고 있고 타겟된 몬스터 포지션이 플레이어보다 왼쪽에 있어야 함
+        else if (isRight == false && targeting().position.x < playerObj.transform.position.x)
         {
             transform.localScale = new Vector3(-1, 1, 1);
-            //transform.Translate(-moveX, 0, 0);
-            transform.position = Vector2.MoveTowards(transform.position, FindClosestEnemy().transform.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, targeting().position, speed * Time.deltaTime);
         }
+        //화살 역방향 가는거 막음
+        else
+            Destroy(gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-
         //플랫폼에 부딪힐 경우 화살 사라짐
         if (other.gameObject.layer == 8)
         {
@@ -54,27 +56,26 @@ public class ArrowMover : MonoBehaviour {
         }
     }
 
-    GameObject FindClosestEnemy()
+    public Transform targeting()
     {
-        GameObject[] gos;
-        gos = GameObject.FindGameObjectsWithTag("Enemy");
-        GameObject closest = null;
-
-        //이 부분에서 카메라 화면 내의 적만 찾도록 변경해줘야 함
-        float distance = Mathf.Infinity;
-
-        Vector3 position = transform.position;
-        foreach(GameObject go in gos)
+        if (Input.GetMouseButtonUp(0))
         {
-            Vector3 diff = go.transform.position - position;
-            float curDistance = diff.sqrMagnitude;
-            if(curDistance < distance)
-            {
-                closest = go;
-                distance = curDistance;
-            }
-        }
-        return closest;
-    }
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
 
+            RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+
+            if (hit.collider != null)
+            {
+                if (hit.collider.gameObject.tag == "Enemy")
+                {
+                    tempPos = hit.collider.gameObject.transform;
+                }
+            }
+            else
+                tempPos = null;
+        }
+
+        return tempPos;
+    }    
 }

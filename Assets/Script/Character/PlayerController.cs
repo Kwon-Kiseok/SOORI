@@ -18,9 +18,9 @@ public class PlayerController : MonoBehaviour {
     float shootTimer = 0;
     public int AttackDamage = 1;
     [SerializeField] private bool isHolding = false;
-    
-    //--Select Target elements
 
+    //--Select Target elements
+    public ClickManager cm;
 
     //--Dead event elements
     public Sprite deadSprite;
@@ -406,7 +406,7 @@ public class PlayerController : MonoBehaviour {
             rigid.AddForce(new Vector2(1000, 1000));
     }
 
-    //--------[Shooting Control Function]------
+    //--------[Shooting Animation Control Function]------
     void ShootControl()
     {
         if (canShoot == true)
@@ -434,16 +434,20 @@ public class PlayerController : MonoBehaviour {
                 animator.SetBool("SHOT_HOLD", false);
                 animator.SetTrigger("SHOT_AFTER");
                 isHolding = false;
-                Instantiate(ArrowPrefab, transform.position, Quaternion.identity);
+
+                if (ArrowPrefab.GetComponent<ArrowMover>().targeting() != null)
+                    Instantiate(ArrowPrefab, transform.position, Quaternion.identity);
+                else
+                    return;
             }
 
             //클릭하고 바로 뗄 경우 예외 처리 하는 부분
             else if(Input.GetMouseButtonUp(0) && !animatorState.IsName("SOORI_SHOT_HOLD"))
             {
                 animator.SetBool("SHOT_BEFORE", false);
-                animator.SetBool("SHOT_HOLD", false); 
+                animator.SetBool("SHOT_HOLD", false);
                 //애니메이션 무한반복 되는 현상 강제정지
-                if(animatorState.IsName("SOORI_SHOT_BEFORE"))
+                if (animatorState.IsName("SOORI_SHOT_BEFORE"))
                 {
                     animator.Play("SOORI_IDLE");
                 }

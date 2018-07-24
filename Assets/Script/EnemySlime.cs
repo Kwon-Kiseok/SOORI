@@ -28,6 +28,9 @@ public class EnemySlime : EnemyController {
     //몬스터 원래 위치
     private Vector2 originTransform;
 
+    //화면에 들어오는지 
+    public bool isVisible = false;
+
     public int Health = 3;
 
     [SerializeField] private bool isTracing = false;
@@ -127,7 +130,7 @@ public class EnemySlime : EnemyController {
             Destroy(other.gameObject);
             Health -= playerObj.GetComponent<PlayerController>().AttackDamage;           
         }
-        if (Health == 0)
+        if (Health <= 0)
         {
             Destroy(gameObject);
         }
@@ -200,4 +203,10 @@ public class EnemySlime : EnemyController {
         //m.color = Color.white;
         //r.material = m;
     }
+
+    void OnWillRenderObject()
+    {
+        isVisible = true;
+    }
+
 }

@@ -45,5 +45,4 @@ public class EnemyController : MonoBehaviour {
         this.transform.localScale = enemyScale;
     }
 
-
 }
