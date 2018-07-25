@@ -274,7 +274,7 @@ MonoBehaviour:
   EnemyType: 1
   TraceRange: 30
   isHit: 0
-  stunTime: 0.15
+  stunTime: 1
   rushAttack: 0
   rushX: 40
   rushY: 5

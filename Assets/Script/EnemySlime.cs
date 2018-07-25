@@ -52,7 +52,7 @@ public class EnemySlime : EnemyController {
 
         Raycasting();
 
-        if (isHit == true)
+        if (isHit == true && Health >= 1)
         {
             StartCoroutine("isHitting");
         }
@@ -151,9 +151,12 @@ public class EnemySlime : EnemyController {
         if (other.tag == "Arrow" && Health > 0)
         {
             isHit = true;
-            animator.SetTrigger("HIT");
+            Health -= playerObj.GetComponent<PlayerController>().AttackDamage;
             Destroy(other.gameObject);
-            Health -= playerObj.GetComponent<PlayerController>().AttackDamage;           
+            //죽을 때 맞는 애니메이션 재생 방지
+            if(Health > 0)
+                animator.SetTrigger("HIT");
+        
         }
 
         //방해물과 부딪히면 돌려줌
@@ -227,25 +230,18 @@ public class EnemySlime : EnemyController {
     }
     IEnumerator isHitting()
     {
-        //Renderer r = this.GetComponent<Renderer>();
-        //Material m = r.material;
-        //m.color = Color.red;
-        //r.material = m;       
-
         yield return new WaitForSeconds(stunTime);
         isHit = false;
-
-        //m.color = Color.white;
-        //r.material = m;
     }
     IEnumerator isDead()
     {
+        animator.SetTrigger("DEAD");
+        //animator.SetInteger("SLIMESTATE", -1);
         EnemySlime controller = this.gameObject.GetComponent<EnemySlime>();
         controller.enabled = false;
-        this.gameObject.GetComponentInChildren<CircleCollider2D>().enabled = false;
-        animator.SetInteger("SLIMESTATE", -1);
+        this.gameObject.GetComponentInChildren<CircleCollider2D>().enabled = false;        
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         if (Health <= 0)
         {
             Destroy(gameObject);
