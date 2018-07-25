@@ -56,6 +56,11 @@ public class EnemySlime : EnemyController {
         {
             StartCoroutine("isHitting");
         }
+        if(Health <= 0)
+        {
+            StartCoroutine("isDead");
+        }
+
     }
 
     void FixedUpdate()
@@ -72,9 +77,11 @@ public class EnemySlime : EnemyController {
         //--------------------------------------------------02 추적형 이동-----------------------------------------------
         else if (EnemyType == 1 && isHit == false)
         {
+            if (animatorState.IsName("01_SLIME_ATTACK"))
+                animator.SetInteger("SLIMESTATE", 0);
 
             //추적 범위 내 일 경우
-            if(Distance < TraceRange)
+            if (Distance < TraceRange)
             {
                 //대상이 보다 오른쪽에 있을 경우
                 if(playerObj.transform.position.x > transform.position.x)
@@ -104,9 +111,10 @@ public class EnemySlime : EnemyController {
 
         //--------------------------------------------------03 날아다니는 추적형-----------------------------------------------
         else if (EnemyType == 2 && isHit == false)
-        {
+        {           
+
             //추적 범위 내 일 경우
-            if(Distance < TraceRange)
+            if (Distance < TraceRange)
             {
                 //대상이 보다 오른쪽에 있을 경우
                 if(playerObj.transform.position.x > transform.position.x)
@@ -143,12 +151,9 @@ public class EnemySlime : EnemyController {
         if (other.tag == "Arrow" && Health > 0)
         {
             isHit = true;
+            animator.SetTrigger("HIT");
             Destroy(other.gameObject);
             Health -= playerObj.GetComponent<PlayerController>().AttackDamage;           
-        }
-        if (Health <= 0)
-        {
-            Destroy(gameObject);
         }
 
         //방해물과 부딪히면 돌려줌
@@ -183,6 +188,9 @@ public class EnemySlime : EnemyController {
     //몬스터 돌진 어택
     public void RushAttack()
     {
+        if (isHit == true)
+            return;
+
         if(rushAttack == true && Time.time > nextRush)
         {
             if (EnemyType == 2)
@@ -222,7 +230,7 @@ public class EnemySlime : EnemyController {
         //Renderer r = this.GetComponent<Renderer>();
         //Material m = r.material;
         //m.color = Color.red;
-        //r.material = m;
+        //r.material = m;       
 
         yield return new WaitForSeconds(stunTime);
         isHit = false;
@@ -230,4 +238,18 @@ public class EnemySlime : EnemyController {
         //m.color = Color.white;
         //r.material = m;
     }
+    IEnumerator isDead()
+    {
+        EnemySlime controller = this.gameObject.GetComponent<EnemySlime>();
+        controller.enabled = false;
+        this.gameObject.GetComponentInChildren<CircleCollider2D>().enabled = false;
+        animator.SetInteger("SLIMESTATE", -1);
+
+        yield return new WaitForSeconds(2f);
+        if (Health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 }

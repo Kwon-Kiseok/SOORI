@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour {
         //백점프
         if(Input.GetKeyDown(KeyCode.LeftShift) && Input.GetAxisRaw("Horizontal") == 0 )
         {
-            if (animator.GetBool("isJumping") || animatorState.IsName("SONIC_DASH") || animator.GetBool("isBackStep") || animatorState.IsName("SOORI_DASH"))
+            if (animator.GetBool("isJumping") || animator.GetBool("isBackStep") || animatorState.IsName("SOORI_DASH"))
                 return;
             isBackStep = true;
             animator.SetBool("isBackStep", true);
@@ -251,6 +251,8 @@ public class PlayerController : MonoBehaviour {
         if (other.gameObject.layer == 8)
         {
             animator.SetBool("isBackStep", false);
+            animator.SetBool("isFalling", false);
+            
         }
     }
     void OnTriggerExit2D(Collider2D other)
@@ -275,12 +277,12 @@ public class PlayerController : MonoBehaviour {
             {
                 if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && Input.GetKeyDown(KeyCode.LeftShift))
                 {
-                    animator.SetBool("isDash", true);
+                    animator.SetTrigger("Dash");
                 direction = 1;
                 }
                 else if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && Input.GetKeyDown(KeyCode.LeftShift))
                 {
-                    animator.SetBool("isDash", true);
+                    animator.SetTrigger("Dash");
                 direction = 2;
             }
             } else
@@ -291,7 +293,7 @@ public class PlayerController : MonoBehaviour {
                     dashTime = startDashTime;
                     rigid.velocity = Vector2.zero;
                     dashCoolTime = 1f;            //대쉬 쿨타임 
-                    animator.SetBool("isDash", false);
+                    //animator.SetTrigger("Dash");
                 }
                 else
                 {

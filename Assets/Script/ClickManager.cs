@@ -67,24 +67,26 @@ public class ClickManager : MonoBehaviour {
             return;
 
 
-        timeSpan += Time.deltaTime; //경과 시간 등록
+        timeSpan += Time.smoothDeltaTime; //경과 시간 등록
 
 
-        if(timeSpan < 1.75f)
-        temp.transform.localScale = Vector2.Lerp(originalScale, destinationScale, timeSpan/3.5f);
-        else if(timeSpan >= 1.75f)
-        temp.transform.localScale = Vector2.Lerp(destinationScale, originalScale, timeSpan /3.5f);
+        //조준점 줄어드는 부분
+        if (timeSpan < 1.25f)
+            temp.transform.localScale = Vector2.Lerp(originalScale, destinationScale, timeSpan / 0.75f);
+        //조준점 늘어나는 부분
+        else if (timeSpan >= 1.25f)
+            temp.transform.localScale = Vector2.Lerp(temp.transform.localScale, originalScale, (timeSpan - 1.25f)/ 12.0f);
 
-        //0 ~ 0.9초 까지는 데미지 1 판정
-        if (timeSpan >= 0 && timeSpan < 1.0f)
+        //0 ~ 0.4초 까지는 데미지 1 판정
+        if (timeSpan >= 0 && timeSpan < 0.5f)
         {
             Debug.Log("DMG = 1");
             playerObj.GetComponent<PlayerController>().AttackDamage = 1;
             temp.GetComponent<Renderer>().material.color = Color.white;
         }
 
-        //1 ~ 1.4초 까지는 데미지 2 판정
-        else if (timeSpan >= 1.0f && timeSpan < 1.5f)
+        //0.5 ~ 0.9초 까지는 데미지 2 판정
+        else if (timeSpan >= 0.5f && timeSpan < 1.0f)
         {
             Debug.Log("DMG = 2");
             playerObj.GetComponent<PlayerController>().AttackDamage = 2;
@@ -92,8 +94,8 @@ public class ClickManager : MonoBehaviour {
 
         }
 
-        //1.5 ~ 1.74초 까지는 데미지 3 판정
-        else if (timeSpan >= 1.5f && timeSpan < 1.75f)
+        //1.0 ~ 1.24초 까지는 데미지 3 판정
+        else if (timeSpan >= 1.0f && timeSpan < 1.25f)
         {
             Debug.Log("DMG = 3");
             playerObj.GetComponent<PlayerController>().AttackDamage = 3;
@@ -101,8 +103,8 @@ public class ClickManager : MonoBehaviour {
 
         }
 
-        //1.75 ~ 1.9초 까지는 데미지 3 판정
-        else if (timeSpan >= 1.75f && timeSpan < 2.0f)
+        //1.25 ~ 1.4초 까지는 데미지 3 판정
+        else if (timeSpan >= 1.25f && timeSpan < 1.5f)
         {
             Debug.Log("DMG = 3");
             playerObj.GetComponent<PlayerController>().AttackDamage = 3;
@@ -110,25 +112,25 @@ public class ClickManager : MonoBehaviour {
 
         }
 
-        //2.0 ~ 2.4초 까지는 데미지 2 판정
+        //1.5 ~ 1.9초 까지는 데미지 2 판정
+        else if (timeSpan >= 1.5f && timeSpan < 2.0f)
+        {
+            Debug.Log("DMG = 2");
+            playerObj.GetComponent<PlayerController>().AttackDamage = 2;
+            temp.GetComponent<Renderer>().material.color = Color.yellow;
+
+        }
+
+        //2.0 ~ 2.4초 까지는 데미지 1 판정
         else if (timeSpan >= 2.0f && timeSpan < 2.5f)
         {
-            Debug.Log("DMG = 2");
-            playerObj.GetComponent<PlayerController>().AttackDamage = 2;
-            temp.GetComponent<Renderer>().material.color = Color.yellow;
-
-        }
-
-        //2.5 ~ 3.4초 까지는 데미지 1 판정
-        else if (timeSpan >= 2.5f && timeSpan < 3.5f)
-        {
             Debug.Log("DMG = 1");
             playerObj.GetComponent<PlayerController>().AttackDamage = 1;
             temp.GetComponent<Renderer>().material.color = Color.white;
 
         }
 
-        //3이 넘어가면 0부터 루프 시켜 줌
+        //2.5이 넘어가면 0부터 루프 시켜 줌
         else
         {
             timeSpan = 0;

@@ -3015,6 +3015,29 @@ Transform:
   m_PrefabParentObject: {fileID: 4483172077432198, guid: 3d8111f2d6b500447971b8c0859c7086,
     type: 2}
   m_PrefabInternal: {fileID: 716282068}
+--- !u!1 &126299903 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1484904812356828, guid: e35f8e2848aed0f41bc055b783640a87,
+    type: 2}
+  m_PrefabInternal: {fileID: 1754307735}
+--- !u!95 &126299908
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 126299903}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &131498018
 Prefab:
   m_ObjectHideFlags: 0
