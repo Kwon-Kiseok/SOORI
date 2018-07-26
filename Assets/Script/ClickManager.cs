@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ClickManager : MonoBehaviour {
 
-
     private GameObject playerObj;
     public GameObject target = null;
     private GameObject temp = null;
@@ -25,6 +24,9 @@ public class ClickManager : MonoBehaviour {
 
     void Update()
     {
+        if (Time.timeScale == 0f)
+            return;
+
         playerObj = GameObject.FindGameObjectWithTag("Player");
 
         //좌클릭 시 조준점이 생김

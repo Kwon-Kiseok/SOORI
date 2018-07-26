@@ -39875,6 +39875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bc244a896acd4b4c8e6d647072fd224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioManager: {fileID: 0}
   target: {fileID: 1439017762440422, guid: dd070568807fd44478f582af2b546c5d, type: 2}
   isTarget: 0
 --- !u!4 &2029760981

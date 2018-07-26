@@ -80,6 +80,9 @@ public class PlayerController : MonoBehaviour {
 
 	void Update () {
 
+        if (Time.timeScale == 0f)
+            return;
+
         animatorState = animator.GetCurrentAnimatorStateInfo(0);
         //떨어지는 상태 체크
         FallCheck();

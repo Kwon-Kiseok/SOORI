@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 16643292}
   - component: {fileID: 16643291}
   m_Layer: 5
-  m_Name: StartBtn
+  m_Name: 0_StartBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -499,7 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9f4daac7b73b5b439024bb2642d0b5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioManager: {fileID: 0}
+  uiObject: {fileID: 0}
 --- !u!4 &688151909
 Transform:
   m_ObjectHideFlags: 0
@@ -775,7 +775,7 @@ GameObject:
   - component: {fileID: 1142959506}
   - component: {fileID: 1142959505}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: 0_Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -871,7 +871,7 @@ GameObject:
   - component: {fileID: 1466150296}
   - component: {fileID: 1466150295}
   m_Layer: 5
-  m_Name: ExitBtn
+  m_Name: 0_ExitBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
