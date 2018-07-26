@@ -9,12 +9,18 @@ public class GameMaster : MonoBehaviour {
     static bool isEnded = false;
     public static bool isPaused = false;
     static int stageLevel = 0;
+
+    public GameObject PauseMenuObj;
+    public GameObject EventManager;
     AudioSource audioManager;
 
     void Awake()
     {
+        Screen.SetResolution(1920,1080,true);
         audioManager = GetComponent<AudioSource>();
         DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(PauseMenuObj);
+        DontDestroyOnLoad(EventManager);
     }
 
     void Update()
@@ -22,8 +28,19 @@ public class GameMaster : MonoBehaviour {
         PauseGame();
     }
 
+    public void TitleScene()
+    {
+        Time.timeScale = 1;
+        isPaused = false;
+        audioManager.Stop();
+        PauseMenuObj.SetActive(false);
+        stageLevel = 0;
+        SceneManager.LoadScene(stageLevel);
+        Destroy(gameObject);
+    }
+
     public void PlayGame()
-    {        
+    {       
         stageLevel = 1;
         SceneManager.LoadScene(stageLevel);
         audioManager.Play();
@@ -32,52 +49,36 @@ public class GameMaster : MonoBehaviour {
     public void EndLevel()
     {
         stageLevel++;
-        SceneManager.LoadScene(stageLevel, LoadSceneMode.Single);
+        SceneManager.LoadScene(stageLevel,LoadSceneMode.Single);
         audioManager.Play();
     }
 
     public void QuitGame()
     {
         Debug.Log("Game Quit!");
+        PauseMenuObj.SetActive(false);
         Application.Quit();
     }
 
     public void PauseGame()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && isPaused == false)
+        if (stageLevel != 0 && Input.GetKeyDown(KeyCode.Escape) && isPaused == false)
         {
+            PauseMenuObj.SetActive(true);
             audioManager.Pause();
             Time.timeScale = 0;
             isPaused = true;
         }
     }
 
-    void OnGUI()
+    public void ResumeGame()
     {
-        GUILayout.BeginArea(new Rect(0, 0, Screen.width, Screen.height));
-        GUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
-
-        GUILayout.BeginVertical();
-        GUILayout.FlexibleSpace();
-
-        if (isPaused == true)
+        if(isPaused == true)
         {
-
-            if(GUILayout.Button("Continue?",GUILayout.Width(400), GUILayout.Height(80)))
-            {
-                Time.timeScale = 1;
-                isPaused = false;
-                audioManager.Play();
-            }
+            PauseMenuObj.SetActive(false);
+            audioManager.Play();
+            Time.timeScale = 1;
+            isPaused = false;
         }
-
-        GUILayout.FlexibleSpace();
-        GUILayout.EndVertical();
-        
-        GUILayout.FlexibleSpace();
-        GUILayout.EndHorizontal();
-
-        GUILayout.EndArea();
     }
 }

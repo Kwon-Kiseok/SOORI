@@ -53,12 +53,22 @@ public class PlayerController : MonoBehaviour {
     private float dashCoolTime;
     private float dashTime;
 
+    //--AudioSource Arrow
+    public AudioClip D1Arrow_audio;
+    public AudioClip D2Arrow_audio;
+    public AudioClip D3Arrow_audio;
+
+    //--AudioSource PlayerState
+    public AudioClip Hit_audio;
+
+
     //Components
     Rigidbody2D rigid;
     Animator animator;
     Vector3 movement;
     SpriteRenderer spriteRenderer;
     AnimatorStateInfo animatorState;
+    AudioSource audio;
 
     void OnEnable()
     {
@@ -75,7 +85,7 @@ public class PlayerController : MonoBehaviour {
         animator = gameObject.GetComponent<Animator>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         dashTime = startDashTime;
-
+        audio = GetComponent<AudioSource>();
     }
 
 	void Update () {
@@ -89,6 +99,9 @@ public class PlayerController : MonoBehaviour {
 
         //공격 발사
         ShootControl();
+
+        //플레이어 상태 효과음 체크
+        AudioState();
 
         //피격무적인지 아닌지 체크
         if(this.isImmune == true)
@@ -447,18 +460,24 @@ public class PlayerController : MonoBehaviour {
                 isHolding = false;
 
                 if (ArrowPrefab.GetComponent<ArrowMover>().targeting() != null)
+                {
                     Instantiate(ArrowPrefab, transform.position, Quaternion.identity);
+                    AudioArrow();
+                }
                 else
                     return;
             }
 
-            //점프 샷
-            if(animatorState.IsName("SOORI_JUMP") && Input.GetMouseButtonUp(0))
+            //점프 샷 점프 도중에 발사하거나 점프중에 발사되게
+            if((animatorState.IsName("SOORI_JUMP") || animatorState.IsName("SOORI_LANDING")) && Input.GetMouseButtonUp(0))
             {
                 isJumpShot = true;
                 animator.SetTrigger("SHOT_JUMP");
                 if (ArrowPrefab.GetComponent<ArrowMover>().targeting() != null)
+                {
                     Instantiate(ArrowPrefab, transform.position, Quaternion.identity);
+                    AudioArrow();
+                }
                 else
                     return;
             }
@@ -478,5 +497,32 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+
+    //데미지마다 화살 발사 소리 다르게 차용
+    void AudioArrow()
+    {
+        if (AttackDamage == 1)
+        {
+            audio.PlayOneShot(D1Arrow_audio);
+        }
+        else if (AttackDamage == 2)
+        {
+            audio.PlayOneShot(D2Arrow_audio);
+        }
+        else if (AttackDamage == 3)
+        {
+            audio.PlayOneShot(D3Arrow_audio);
+        }
+    }
+
+    //플레이어의 상태마다 효과음 나오게
+    void AudioState()
+    {
+        //피격음
+        if(animatorState.IsName("SOORI_HIT"))
+        {
+            audio.PlayOneShot(Hit_audio);
+        }
+    }
     
 }

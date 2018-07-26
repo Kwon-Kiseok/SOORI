@@ -7,6 +7,7 @@ public class ClickManager : MonoBehaviour {
     private GameObject playerObj;
     public GameObject target = null;
     private GameObject temp = null;
+
    
     //Damage judge by time elements
     private float timeSpan;  //경과 시간을 갖는 변수

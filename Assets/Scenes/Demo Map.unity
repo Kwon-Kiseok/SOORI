@@ -25839,6 +25839,11 @@ Prefab:
       propertyPath: m_Name
       value: SOORI
       objectReference: {fileID: 0}
+    - target: {fileID: 82809484217977920, guid: 7e6b264a33cca8c418565960c4584431,
+        type: 2}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7e6b264a33cca8c418565960c4584431, type: 2}
   m_IsPrefabParent: 0
@@ -39875,7 +39880,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bc244a896acd4b4c8e6d647072fd224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioManager: {fileID: 0}
   target: {fileID: 1439017762440422, guid: dd070568807fd44478f582af2b546c5d, type: 2}
   isTarget: 0
 --- !u!4 &2029760981

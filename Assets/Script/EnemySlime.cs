@@ -8,6 +8,7 @@ public class EnemySlime : EnemyController {
     private GameObject playerObj;
     Animator animator;
     AnimatorStateInfo animatorState;
+    AudioSource audio;
 
     //유닛의 타입 결정 0 = 기본 1 = 추적형
     public int EnemyType;
@@ -33,7 +34,12 @@ public class EnemySlime : EnemyController {
     //화면에 들어오는지 
     public bool isVisible = false;
 
+    //몬스터 체력
     public int Health = 3;
+
+    //몬스터 효과음
+    public AudioClip Hit_audio;
+    public AudioClip[] Dead_audio;
 
     [SerializeField] private bool isTracing = false;
 
@@ -42,6 +48,7 @@ public class EnemySlime : EnemyController {
         animator = gameObject.GetComponent<Animator>();
         rigid = this.gameObject.GetComponent<Rigidbody2D>();
         originTransform = transform.position;
+        audio = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -154,8 +161,11 @@ public class EnemySlime : EnemyController {
             Health -= playerObj.GetComponent<PlayerController>().AttackDamage;
             Destroy(other.gameObject);
             //죽을 때 맞는 애니메이션 재생 방지
-            if(Health > 0)
+            if (Health > 0)
+            {
+                audio.PlayOneShot(Hit_audio);
                 animator.SetTrigger("HIT");
+            }
         
         }
 
@@ -235,6 +245,9 @@ public class EnemySlime : EnemyController {
     }
     IEnumerator isDead()
     {
+        //Dead Audio Play
+        audio.PlayOneShot(Dead_audio[Random.Range(0,2)]);
+        //Dead Animation Play
         animator.SetTrigger("DEAD");
         //animator.SetInteger("SLIMESTATE", -1);
         EnemySlime controller = this.gameObject.GetComponent<EnemySlime>();
