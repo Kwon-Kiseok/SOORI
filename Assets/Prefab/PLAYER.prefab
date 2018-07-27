@@ -116,7 +116,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -235,6 +235,7 @@ MonoBehaviour:
   immunityDuration: 1.5
   immunityTime: 0
   isDead: 0
+  isHit: 0
   ArrowPrefab: {fileID: 1341043845304260, guid: 04aa940568de0ff4ab308909b460ebe5,
     type: 2}
   canShoot: 1
@@ -253,10 +254,10 @@ MonoBehaviour:
   dashSpeed: 50
   startDashTime: 0.2
   direction: 0
-  D1Arrow_audio: {fileID: 8300000, guid: d941c7b76412bfd44b70ddfb2ec4d7f1, type: 3}
-  D2Arrow_audio: {fileID: 8300000, guid: 5957fd459b7918145a8e8fcc44e5f2c7, type: 3}
-  D3Arrow_audio: {fileID: 8300000, guid: 572ee804bc10dbb44bec1141a851fa57, type: 3}
-  Hit_audio: {fileID: 8300000, guid: 2d0318f0cfd983b4f8b684a29b9d2afc, type: 3}
+  D1Arrow_audio: {fileID: 8300000, guid: ceda5df99358f474ea6e980fc8d672d6, type: 3}
+  D2Arrow_audio: {fileID: 8300000, guid: edd440e2bfcf2bb4daecbcd6db000d5f, type: 3}
+  D3Arrow_audio: {fileID: 8300000, guid: 1be452d5ed6a22a49a586182b2994126, type: 3}
+  Hit_audio: {fileID: 8300000, guid: d2ece1758d60d514bb510bd93e96b3fa, type: 3}
 --- !u!212 &212631427287257746
 SpriteRenderer:
   m_ObjectHideFlags: 1

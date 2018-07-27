@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 95318355635851072}
   - component: {fileID: 82527344431329410}
   m_Layer: 9
-  m_Name: "\uB0A0\uC544\uB2E4\uB2C8\uB294 \uC2A4\uD30C\uAC8C\uD2F0 \uAD34\uBB3C"
+  m_Name: 02_SLIME
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1484904812356828}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -95.8, y: 37, z: 0}
+  m_LocalPosition: {x: 186.3, y: 95.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4406120366672628}
@@ -350,12 +350,12 @@ MonoBehaviour:
   rushY: 0
   rushRate: 5
   isVisible: 0
-  Health: 50
-  Hit_audio: {fileID: 8300000, guid: fb4c9904bb442ad4c8ff12d01a114be6, type: 3}
+  Health: 5
+  Hit_audio: {fileID: 8300000, guid: 3c3996f1cdd1d084aa4dc22f359bb3d0, type: 3}
   Dead_audio:
-  - {fileID: 8300000, guid: bf268a600b059eb4f8ff5c8de13cec46, type: 3}
-  - {fileID: 8300000, guid: acc6acfd41f6e0345a8af9d629f22599, type: 3}
-  - {fileID: 8300000, guid: 817837bd88ffb0a4ca2e32ef7c678308, type: 3}
+  - {fileID: 8300000, guid: 64323fe58419df64f8062698bef7b81f, type: 3}
+  - {fileID: 8300000, guid: 85b8a25091b4ac04bb302941f2d792fd, type: 3}
+  - {fileID: 8300000, guid: 7b58e5d84f2b45c4588f7d60c0dcd2f5, type: 3}
   isTracing: 1
 --- !u!212 &212920793316546102
 SpriteRenderer:
