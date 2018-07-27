@@ -61,13 +61,13 @@ public class EnemySlime : EnemyController {
 
         if (isHit == true && Health >= 1)
         {
+            rigid.velocity = Vector2.zero;
             StartCoroutine("isHitting");
         }
         if(Health <= 0)
         {
             StartCoroutine("isDead");
-        }
-
+        }        
     }
 
     void FixedUpdate()
@@ -118,7 +118,10 @@ public class EnemySlime : EnemyController {
 
         //--------------------------------------------------03 날아다니는 추적형-----------------------------------------------
         else if (EnemyType == 2 && isHit == false)
-        {           
+        {
+            if (animatorState.IsName("02_SLIME_ATTACK"))
+                animator.SetInteger("SLIMESTATE", 0);
+
 
             //추적 범위 내 일 경우
             if (Distance < TraceRange)
@@ -134,7 +137,7 @@ public class EnemySlime : EnemyController {
                     transform.localScale = new Vector3(1, 1, 1);
                     isFacingRight = false;
                 }
-                isTracing = true;
+                isTracing = true;                
                 transform.position = Vector2.MoveTowards(transform.position, playerObj.transform.position, maxSpeed * Time.deltaTime);
             }
             //추적 범위 밖 일 경우
@@ -210,31 +213,30 @@ public class EnemySlime : EnemyController {
             {
                 if(isFacingRight == true)
                 {
-                    rigid.velocity = Vector2.right * rushX;
+                    Vector2 rushForce = new Vector2(rushX, rushY);
+                    rigid.AddForce(rushForce, ForceMode2D.Impulse);
                 }
                 else
                 {
-                    rigid.velocity = Vector2.left * rushX;
+                    Vector2 rushForce = new Vector2(-rushX, rushY);
+                    rigid.AddForce(rushForce, ForceMode2D.Impulse);
                 }
             }
             else
             {
                 if (this.isFacingRight == true)
                 {
-                    //돌진 애니메이션
-                    animator.SetInteger("SLIMESTATE", 1);
                     Vector2 rushForce = new Vector2(rushX, rushY);
                     rigid.AddForce(rushForce, ForceMode2D.Impulse);
                 }
                 else
                 {
-                    //돌진 애니메이션
-                    animator.SetInteger("SLIMESTATE", 1);
                     Vector2 rushForce = new Vector2(-rushX, rushY);
                     rigid.AddForce(rushForce, ForceMode2D.Impulse);
                 }
             }
-
+            //돌진 애니메이션
+            animator.SetInteger("SLIMESTATE", 1);
             nextRush = Time.time + rushRate;
         }        
     }

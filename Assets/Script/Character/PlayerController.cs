@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
     public float immunityDuration = 1.5f; //무적시간이 얼마인지 나타낸다
     [SerializeField]private float immunityTime = 0f; //무적이 된 지 몇초인지 나타낸다
     [SerializeField]private bool isDead;
+    [SerializeField] private bool isHit;
 
     //--Attack elements
     public GameObject ArrowPrefab;
@@ -349,6 +350,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (this.isImmune == false && isDead == false)
         {
+            isHit = true;
             this.Health = this.Health - damage;
             Debug.Log("Player Health : " + this.Health.ToString());
 
@@ -519,8 +521,9 @@ public class PlayerController : MonoBehaviour {
     void AudioState()
     {
         //피격음
-        if(animatorState.IsName("SOORI_HIT"))
+        if(isHit == true)
         {
+            isHit = false;
             audio.PlayOneShot(Hit_audio);
         }
     }
