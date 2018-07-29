@@ -367,6 +367,8 @@ MonoBehaviour:
   sightEnd: {fileID: 4862779646321490}
   spotted: 0
   SurpriseMark: {fileID: 1234671813058388}
+  hitParticle: {fileID: 1656580837662744, guid: 5980d2da93176f343b7e8d4f2fca711a,
+    type: 2}
   EnemyType: 0
   TraceRange: 1
   isHit: 0

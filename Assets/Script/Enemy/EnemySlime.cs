@@ -9,6 +9,7 @@ public class EnemySlime : EnemyController {
     Animator animator;
     AnimatorStateInfo animatorState;
     AudioSource audio;
+    public GameObject hitParticle;
 
     //유닛의 타입 결정 0 = 기본 1 = 추적형
     public int EnemyType;
@@ -149,17 +150,13 @@ public class EnemySlime : EnemyController {
                 transform.position = Vector2.MoveTowards(transform.position, originTransform, (maxSpeed - 10f) * Time.deltaTime);
             }
         }
-
-
-
-
-
-
     }
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Arrow" && Health > 0)
         {
+            //피격 파티클 이펙트
+            Instantiate(hitParticle, transform.position, transform.rotation);
             isHit = true;
             Health -= playerObj.GetComponent<PlayerController>().AttackDamage;
             Destroy(other.gameObject);
@@ -187,7 +184,11 @@ public class EnemySlime : EnemyController {
         if (animatorState.IsName("01_SLIME_ATTACK"))
             animator.SetInteger("SLIMESTATE", 0);
 
-        Vector3 moveVelocity = Vector3.zero;
+        if (animatorState.IsName("01_SLIME_HIT") || animatorState.IsName("02_SLIME_HIT"))
+        {
+            return;
+        }
+            Vector3 moveVelocity = Vector3.zero;
 
         if (this.isFacingRight == true)
         {
