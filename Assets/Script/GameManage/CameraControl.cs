@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraControl : MonoBehaviour
 {
@@ -21,19 +22,24 @@ public class CameraControl : MonoBehaviour
 
     [SerializeField] private bool Rdir = true;
     [SerializeField] private bool downInput = false;
+    [SerializeField] private int SceneNum;
 
     public Vector2 maxXAndY;
     public Vector2 minXAndY;
-
+    
     private Transform player;
     private Animator animator;
 
     AnimatorStateInfo animatorState;
 
+    //보스전 시 알리는 변수
+    private bool MeetTheBoss = false;
+
     void Start()
     {      
         player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
+        SceneNum = SceneManager.GetActiveScene().buildIndex;
     }
 
     bool CheckXMargin()
@@ -50,6 +56,8 @@ public class CameraControl : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
 
+        Scene_Boss();
+
         //캐릭터가 보는 방향 체크
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
@@ -60,7 +68,7 @@ public class CameraControl : MonoBehaviour
             Rdir = false;
         }
         animatorState = animator.GetCurrentAnimatorStateInfo(0);
-        if(animatorState.IsName("SONIC_IDLE") || animatorState.IsName("D_SONIC_IDLE"))
+        if(animatorState.IsName("SOORI_IDLE"))
         {
             downInput = true;
         }
@@ -72,7 +80,8 @@ public class CameraControl : MonoBehaviour
     }
     void FixedUpdate()
     {
-        TrackPlayer();    
+        if(MeetTheBoss == false)
+            TrackPlayer();    
     }
 
 
@@ -102,7 +111,7 @@ public class CameraControl : MonoBehaviour
             transform.position = new Vector3(targetX-offsetX, targetY, transform.position.z);
         }
         //아래키 누를 때 카메라 무빙
-        if(Input.GetKey(KeyCode.DownArrow) && transform.position.y > minXAndY.y && downInput == true)
+        if(Input.GetKey(KeyCode.S) && transform.position.y > minXAndY.y && downInput == true)
         {
             if (Rdir == true)
             {
@@ -116,4 +125,20 @@ public class CameraControl : MonoBehaviour
     }
 
 
+    //보스 씬 확인 및 카메라 고정 함수 
+    void Scene_Boss()
+    {
+        //데모챕터 보스씬
+        //추가조건 보스가 죽었을 경우 or 클리어 조건에 달성했을 경우 풀어줘야 함
+        if (SceneNum == 1 && transform.position.x >= 385)
+        {
+            MeetTheBoss = true;
+            transform.position = Vector3.Lerp(transform.position, new Vector3(390, 160, transform.position.z), Time.deltaTime);
+
+            Vector3 playerPos = Camera.main.WorldToViewportPoint(player.position);
+            if (playerPos.x < 0f) playerPos.x = 0f;
+            if (playerPos.x > 1f) playerPos.x = 1f;
+            player.position = Camera.main.ViewportToWorldPoint(playerPos);
+        }
+    }
 }

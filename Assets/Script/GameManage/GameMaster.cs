@@ -23,6 +23,11 @@ public class GameMaster : MonoBehaviour {
         DontDestroyOnLoad(EventManager);
     }
 
+    void Start()
+    {
+        Debug.Log(SceneManager.GetActiveScene().buildIndex);
+    }
+
     void Update()
     {
         PauseGame();
