@@ -14,24 +14,38 @@ public class EnemyController : MonoBehaviour {
 
     public GameObject SurpriseMark = null;
 
+    public float rushRate;
+    public float nextRush;
+
     public void Raycasting()
     {
         Debug.DrawLine(sightStart.position, sightEnd.position, Color.red);
         spotted = Physics2D.Linecast(sightStart.position, sightEnd.position, 1<<LayerMask.NameToLayer("Player"));
 
         CheckRange();
+        if (Time.time + 0.5 >= nextRush)
+        {
+            SurpriseMark.SetActive(true);
+        }
+        else
+        {
+            SurpriseMark.SetActive(false);
+        }
+
     }
     void CheckRange()
     {
         if(spotted == true)
         {
-            SurpriseMark.SetActive(true);
-            gameObject.GetComponent<EnemySlime>().rushAttack = true;
-            gameObject.GetComponent<EnemySlime>().RushAttack();
+            if (SurpriseMark.activeSelf == true)
+            {
+                gameObject.GetComponent<EnemySlime>().rushAttack = true;
+                gameObject.GetComponent<EnemySlime>().RushAttack();
+            }
         }
         else if(spotted == false)
         {
-            SurpriseMark.SetActive(false);
+           // SurpriseMark.SetActive(false);
             gameObject.GetComponent<EnemySlime>().rushAttack = false;
         }
     }

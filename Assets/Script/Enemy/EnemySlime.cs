@@ -26,8 +26,6 @@ public class EnemySlime : EnemyController {
     public bool rushAttack = false;
     public float rushX = 1f;
     public float rushY = 1f;
-    public float rushRate;
-    private float nextRush;
     
 
     //몬스터 원래 위치
@@ -69,11 +67,12 @@ public class EnemySlime : EnemyController {
         if(Health <= 0)
         {
             StartCoroutine("isDead");
-        }        
+        }
     }
 
     void FixedUpdate()
     {
+
         //--------------------------------------------------01 기본형 이동-----------------------------------------------
         if (EnemyType == 0 && isHit == false)
         {
@@ -81,9 +80,7 @@ public class EnemySlime : EnemyController {
         }
 
 
-
-
-        //--------------------------------------------------02 추적형 이동-----------------------------------------------
+       //--------------------------------------------------02 추적형 이동-----------------------------------------------
         else if (EnemyType == 1 && isHit == false)
         {
             if (animatorState.IsName("01_SLIME_ATTACK"))
@@ -145,7 +142,7 @@ public class EnemySlime : EnemyController {
 
                 //대쉬 쿨타임이 다 찼을 경우 
                 //해당 시간 플레이어 감지 위치로 addforce 해줌
-                if (Time.time > nextRush)
+                if (SurpriseMark.activeSelf == true && Time.time > nextRush)
                 {
                     sightEnd.position = playerObj.transform.position;
                     Vector3 temp = sightEnd.position;

@@ -102,7 +102,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1484904812356828}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 153.90596, y: 61.8463, z: 0}
+  m_LocalPosition: {x: 186.3, y: 95.8, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 4406120366672628}
@@ -362,11 +362,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFacingRight: 1
-  maxSpeed: 10
+  maxSpeed: 7.5
   sightStart: {fileID: 4458005611053698}
   sightEnd: {fileID: 4465980903820480}
   spotted: 1
   SurpriseMark: {fileID: 1435261326782784}
+  rushRate: 5
+  nextRush: 0
   hitParticle: {fileID: 1656580837662744, guid: 5980d2da93176f343b7e8d4f2fca711a,
     type: 2}
   EnemyType: 2
@@ -376,7 +378,6 @@ MonoBehaviour:
   rushAttack: 1
   rushX: 35
   rushY: 0
-  rushRate: 5
   isVisible: 0
   Health: 5
   Hit_audio: {fileID: 8300000, guid: 3c3996f1cdd1d084aa4dc22f359bb3d0, type: 3}
