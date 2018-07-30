@@ -45,7 +45,7 @@ public class GameMaster : MonoBehaviour {
     }
 
     public void PlayGame()
-    {       
+    {  
         stageLevel = 1;
         SceneManager.LoadScene(stageLevel);
         audioManager.Play();
