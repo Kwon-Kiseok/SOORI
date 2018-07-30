@@ -28,6 +28,7 @@ public class EnemySlime : EnemyController {
     public float rushY = 1f;
     public float rushRate;
     private float nextRush;
+    
 
     //몬스터 원래 위치
     private Vector2 originTransform;
@@ -127,6 +128,7 @@ public class EnemySlime : EnemyController {
             //추적 범위 내 일 경우
             if (Distance < TraceRange)
             {
+
                 //대상이 보다 오른쪽에 있을 경우
                 if(playerObj.transform.position.x > transform.position.x)
                 {
@@ -138,16 +140,25 @@ public class EnemySlime : EnemyController {
                     transform.localScale = new Vector3(1, 1, 1);
                     isFacingRight = false;
                 }
-                isTracing = true;                
-                transform.position = Vector2.MoveTowards(transform.position, playerObj.transform.position, maxSpeed * Time.deltaTime);
+                //isTracing = true;                
+                //transform.position = Vector2.MoveTowards(transform.position, playerObj.transform.position, maxSpeed * Time.deltaTime);
+
+                //대쉬 쿨타임이 다 찼을 경우 
+                //해당 시간 플레이어 감지 위치로 addforce 해줌
+                if (Time.time > nextRush)
+                {
+                    sightEnd.position = playerObj.transform.position;
+                    Vector3 temp = sightEnd.position;
+                    rigid.AddForce((temp - transform.position) * maxSpeed, ForceMode2D.Impulse);
+                }
             }
             //추적 범위 밖 일 경우
             //대쉬 이동 속도 초기화 및 몬스터 원래 위치로 돌아감
             else if(Distance > TraceRange)
             {
-                isTracing = false;
+                //isTracing = false;
                 rigid.velocity = Vector2.zero;
-                transform.position = Vector2.MoveTowards(transform.position, originTransform, (maxSpeed - 10f) * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, originTransform, 10f*Time.deltaTime);
             }
         }
     }
@@ -214,13 +225,13 @@ public class EnemySlime : EnemyController {
             {
                 if(isFacingRight == true)
                 {
-                    Vector2 rushForce = new Vector2(rushX, rushY);
-                    rigid.AddForce(rushForce, ForceMode2D.Impulse);
+                   // Vector2 temp = sightEnd.position;
+                   // transform.position = Vector2.Lerp(transform.position , temp, maxSpeed*Time.deltaTime);
                 }
                 else
                 {
-                    Vector2 rushForce = new Vector2(-rushX, rushY);
-                    rigid.AddForce(rushForce, ForceMode2D.Impulse);
+                  //  Vector2 temp = sightEnd.position;
+                   // transform.position = Vector2.Lerp(transform.position, temp, maxSpeed*Time.deltaTime);
                 }
             }
             else
@@ -246,6 +257,7 @@ public class EnemySlime : EnemyController {
         yield return new WaitForSeconds(stunTime);
         isHit = false;
     }
+
     IEnumerator isDead()
     {
         //Dead Audio Play
