@@ -8,7 +8,9 @@ public class GameMaster : MonoBehaviour {
 
     static bool isEnded = false;
     public static bool isPaused = false;
-    static int stageLevel = 0;
+    public int stageLevel = 0;
+    //로딩씬 화면 1번에 넣어줌
+    private int LoadingLevel = 1;
 
     public GameObject PauseMenuObj;
     public GameObject EventManager;
@@ -45,16 +47,20 @@ public class GameMaster : MonoBehaviour {
     }
 
     public void PlayGame()
-    {  
-        stageLevel = 1;
-        SceneManager.LoadScene(stageLevel);
+    {
+        //첫 스테이지는 두번째 씬에 가있음
+        stageLevel = 2;
+        //로딩씬을 불러다 줌
+        SceneManager.LoadScene(LoadingLevel);      
         audioManager.Play();
     }
 
     public void EndLevel()
     {
-        stageLevel++;
-        SceneManager.LoadScene(stageLevel,LoadSceneMode.Single);
+        //스테이지 레벨을 올림
+        stageLevel++; 
+        //로딩씬 불러다 줌
+        SceneManager.LoadScene(LoadingLevel);
         audioManager.Play();
     }
 
