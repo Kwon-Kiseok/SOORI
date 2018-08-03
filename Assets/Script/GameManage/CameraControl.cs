@@ -130,7 +130,7 @@ public class CameraControl : MonoBehaviour
     {
         //데모챕터 보스씬
         //추가조건 보스가 죽었을 경우 or 클리어 조건에 달성했을 경우 풀어줘야 함
-        if (SceneNum == 1 && transform.position.x >= 385)
+        if (SceneNum == 2 && transform.position.x >= 385)
         {
             MeetTheBoss = true;
             transform.position = Vector3.Lerp(transform.position, new Vector3(390, 160, transform.position.z), Time.deltaTime);

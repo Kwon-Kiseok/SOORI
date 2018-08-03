@@ -369,6 +369,9 @@ MonoBehaviour:
   SurpriseMark: {fileID: 1435261326782784}
   rushRate: 5
   nextRush: 0
+  MaxHealth: 6
+  CurrentHealth: 0
+  Name: "\uBD80\uC720\uC2AC\uB77C\uC784"
   hitParticle: {fileID: 1656580837662744, guid: 5980d2da93176f343b7e8d4f2fca711a,
     type: 2}
   EnemyType: 2
@@ -379,7 +382,6 @@ MonoBehaviour:
   rushX: 35
   rushY: 0
   isVisible: 0
-  Health: 5
   Hit_audio: {fileID: 8300000, guid: 3c3996f1cdd1d084aa4dc22f359bb3d0, type: 3}
   Dead_audio:
   - {fileID: 8300000, guid: 64323fe58419df64f8062698bef7b81f, type: 3}

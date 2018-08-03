@@ -17,6 +17,11 @@ public class EnemyController : MonoBehaviour {
     public float rushRate;
     public float nextRush;
 
+    //몬스터 체력 및 이름
+    public int MaxHealth;
+    public int CurrentHealth;
+    public string Name;
+
     public void Raycasting()
     {
         Debug.DrawLine(sightStart.position, sightEnd.position, Color.red);

@@ -14,6 +14,10 @@ public class GameMaster : MonoBehaviour {
 
     public GameObject PauseMenuObj;
     public GameObject EventManager;
+    public GameObject InGameUI;
+    public GameObject CharacterManager;
+    public GameObject ClickManager;
+
     AudioSource audioManager;
 
     void Awake()
@@ -23,6 +27,9 @@ public class GameMaster : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
         DontDestroyOnLoad(PauseMenuObj);
         DontDestroyOnLoad(EventManager);
+        DontDestroyOnLoad(InGameUI);
+        DontDestroyOnLoad(CharacterManager);
+        DontDestroyOnLoad(ClickManager);
     }
 
     void Start()
@@ -53,6 +60,9 @@ public class GameMaster : MonoBehaviour {
         //로딩씬을 불러다 줌
         SceneManager.LoadScene(LoadingLevel);      
         audioManager.Play();
+        InGameUI.gameObject.SetActive(true);
+        CharacterManager.gameObject.SetActive(true);
+        ClickManager.gameObject.SetActive(true);
     }
 
     public void EndLevel()

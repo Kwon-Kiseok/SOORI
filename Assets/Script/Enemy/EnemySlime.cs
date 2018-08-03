@@ -35,7 +35,7 @@ public class EnemySlime : EnemyController {
     public bool isVisible = false;
 
     //몬스터 체력
-    public int Health = 3;
+    //public int Health = 3;
 
     //몬스터 효과음
     public AudioClip Hit_audio;
@@ -49,6 +49,7 @@ public class EnemySlime : EnemyController {
         rigid = this.gameObject.GetComponent<Rigidbody2D>();
         originTransform = transform.position;
         audio = GetComponent<AudioSource>();
+        CurrentHealth = MaxHealth;
     }
 
     void Update()
@@ -59,12 +60,12 @@ public class EnemySlime : EnemyController {
 
         Raycasting();
 
-        if (isHit == true && Health >= 1)
+        if (isHit == true && CurrentHealth >= 1)
         {
             rigid.velocity = Vector2.zero;
             StartCoroutine("isHitting");
         }
-        if(Health <= 0)
+        if(CurrentHealth <= 0)
         {
             StartCoroutine("isDead");
         }
@@ -161,15 +162,15 @@ public class EnemySlime : EnemyController {
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Arrow" && Health > 0)
+        if (other.tag == "Arrow" && CurrentHealth > 0)
         {
             //피격 파티클 이펙트
             Instantiate(hitParticle, transform.position, transform.rotation);
             isHit = true;
-            Health -= playerObj.GetComponent<PlayerController>().AttackDamage;
+            CurrentHealth -= playerObj.GetComponent<PlayerController>().AttackDamage;
             Destroy(other.gameObject);
             //죽을 때 맞는 애니메이션 재생 방지
-            if (Health > 0)
+            if (CurrentHealth > 0)
             {
                 audio.PlayOneShot(Hit_audio);
                 animator.SetTrigger("HIT");
@@ -267,7 +268,7 @@ public class EnemySlime : EnemyController {
         this.gameObject.GetComponentInChildren<CircleCollider2D>().enabled = false;        
 
         yield return new WaitForSeconds(0.5f);
-        if (Health <= 0)
+        if (CurrentHealth <= 0)
         {
             Destroy(gameObject);
         }
