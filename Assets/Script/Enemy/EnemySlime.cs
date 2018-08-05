@@ -26,7 +26,12 @@ public class EnemySlime : EnemyController {
     public bool rushAttack = false;
     public float rushX = 1f;
     public float rushY = 1f;
-    
+
+    //원거리 공격 
+    public GameObject projectile;
+    public float projectileDelay;
+    [SerializeField]
+    private bool isShot = false;
 
     //몬스터 원래 위치
     private Vector2 originTransform;
@@ -60,6 +65,10 @@ public class EnemySlime : EnemyController {
 
         Raycasting();
 
+        if(spotted == true && EnemyType == 3 && isShot == false)
+        {
+            StartCoroutine("projectileAttack");
+        }
         if (isHit == true && CurrentHealth >= 1)
         {
             rigid.velocity = Vector2.zero;
@@ -138,8 +147,6 @@ public class EnemySlime : EnemyController {
                     transform.localScale = new Vector3(1, 1, 1);
                     isFacingRight = false;
                 }
-                //isTracing = true;                
-                //transform.position = Vector2.MoveTowards(transform.position, playerObj.transform.position, maxSpeed * Time.deltaTime);
 
                 //대쉬 쿨타임이 다 찼을 경우 
                 //해당 시간 플레이어 감지 위치로 addforce 해줌
@@ -159,13 +166,46 @@ public class EnemySlime : EnemyController {
                 transform.position = Vector2.MoveTowards(transform.position, originTransform, 10f*Time.deltaTime);
             }
         }
+
+
+        //--------------------------------------------------04 원거리형-----------------------------------------------
+        else if(EnemyType == 3 && isHit == false)
+        {
+            if (animatorState.IsName("03_SLIME_ATTACK"))
+                animator.SetInteger("SLIMESTATE", 0);
+
+            if(Distance < TraceRange)
+            {
+                //대상이 보다 오른쪽에 있을 경우
+                if (playerObj.transform.position.x > transform.position.x)
+                {
+                    transform.localScale = new Vector3(-1, 1, 1);
+                    isFacingRight = true;
+                }
+                else if (playerObj.transform.position.x < transform.position.x)
+                {
+                    transform.localScale = new Vector3(1, 1, 1);
+                    isFacingRight = false;
+                }
+            }
+        }
     }
+
+
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Arrow" && CurrentHealth > 0)
         {
             //피격 파티클 이펙트
             Instantiate(hitParticle, transform.position, transform.rotation);
+
+            //껍데기 슬라임의 경우 IDLE 일 경우 데미지 안받음
+            if (EnemyType == 3 && animatorState.IsName("03_SLIME_IDLE"))
+            {
+                Destroy(other.gameObject);
+                return;
+            }
             isHit = true;
             CurrentHealth -= playerObj.GetComponent<PlayerController>().AttackDamage;
             Destroy(other.gameObject);
@@ -175,7 +215,6 @@ public class EnemySlime : EnemyController {
                 audio.PlayOneShot(Hit_audio);
                 animator.SetTrigger("HIT");
             }
-        
         }
 
         //방해물과 부딪히면 돌려줌
@@ -185,6 +224,12 @@ public class EnemySlime : EnemyController {
                 rigid.AddForce(new Vector2(-5, 0), ForceMode2D.Impulse);
             else 
                 rigid.AddForce(new Vector2(5, 0), ForceMode2D.Impulse);
+            Flip();
+        }
+
+        //슬라임끼리 부딪히면 돌려줌 껍데기 슬라임 제외
+        if(other.tag == "Enemy" && EnemyType != 3)
+        {
             Flip();
         }
     }
@@ -215,6 +260,10 @@ public class EnemySlime : EnemyController {
     public void RushAttack()
     {
         if (isHit == true)
+            return;
+
+        //껍데기 슬라임의 경우 돌진공격 제외
+        if (EnemyType == 3)
             return;
 
         if(rushAttack == true && Time.time > nextRush)
@@ -274,4 +323,17 @@ public class EnemySlime : EnemyController {
         }
     }
 
+    IEnumerator projectileAttack()
+    {
+        if (isShot == false)
+        {
+            animator.SetInteger("SLIMESTATE", 1);
+            GameObject clone = (GameObject)Instantiate(projectile, transform.position, Quaternion.identity);
+            isShot = true;
+        }
+
+        yield return new WaitForSeconds(projectileDelay);
+
+        isShot = false;
+    }
 }

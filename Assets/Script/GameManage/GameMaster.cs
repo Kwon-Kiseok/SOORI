@@ -17,6 +17,7 @@ public class GameMaster : MonoBehaviour {
     public GameObject InGameUI;
     public GameObject CharacterManager;
     public GameObject ClickManager;
+    public Button PauseButton;
 
     AudioSource audioManager;
 
@@ -37,17 +38,13 @@ public class GameMaster : MonoBehaviour {
         Debug.Log(SceneManager.GetActiveScene().buildIndex);
     }
 
-    void Update()
-    {
-        PauseGame();
-    }
-
     public void TitleScene()
     {
         Time.timeScale = 1;
         isPaused = false;
         audioManager.Stop();
         PauseMenuObj.SetActive(false);
+        PauseButton.gameObject.SetActive(false);
         stageLevel = 0;
         SceneManager.LoadScene(stageLevel);
         Destroy(gameObject);
@@ -63,12 +60,13 @@ public class GameMaster : MonoBehaviour {
         InGameUI.gameObject.SetActive(true);
         CharacterManager.gameObject.SetActive(true);
         ClickManager.gameObject.SetActive(true);
+        PauseButton.gameObject.SetActive(true);
     }
 
     public void EndLevel()
     {
         //스테이지 레벨을 올림
-        stageLevel++; 
+        stageLevel++;
         //로딩씬 불러다 줌
         SceneManager.LoadScene(LoadingLevel);
         audioManager.Play();
@@ -83,12 +81,13 @@ public class GameMaster : MonoBehaviour {
 
     public void PauseGame()
     {
-        if (stageLevel != 0 && Input.GetKeyDown(KeyCode.Escape) && isPaused == false)
+        if (stageLevel != 0 && isPaused == false)
         {
             PauseMenuObj.SetActive(true);
             audioManager.Pause();
             Time.timeScale = 0;
             isPaused = true;
+            PauseButton.gameObject.SetActive(false);
         }
     }
 
@@ -100,6 +99,7 @@ public class GameMaster : MonoBehaviour {
             audioManager.Play();
             Time.timeScale = 1;
             isPaused = false;
+            PauseButton.gameObject.SetActive(true);
         }
     }
 }

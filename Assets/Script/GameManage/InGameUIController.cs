@@ -35,7 +35,7 @@ public class InGameUIController : MonoBehaviour {
     //타겟 설정 해주는 부분 레이캐스트 클릭으로 할당
     public void DetectingTarget()
     {
-        if(Input.GetMouseButton(0))
+        if(Input.GetMouseButton(0) && Time.timeScale != 0)
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
