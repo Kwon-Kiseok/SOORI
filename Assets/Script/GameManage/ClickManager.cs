@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class ClickManager : MonoBehaviour {
 
+    /*
+     * target = 원 UI 오브젝트
+     * targetCenter = 원 중앙 표식 UI 오브젝트
+     * temp = 원 UI 오브젝트 복사
+     * temp2 = 원 중앙 표식 UI 오브젝트 복사
+     */
+
     private GameObject playerObj;
     public GameObject target = null;
+    public GameObject targetCenter = null;
     private GameObject temp = null;
+    private GameObject temp2 = null;
+    
 
    
     //Damage judge by time elements
@@ -47,6 +57,7 @@ public class ClickManager : MonoBehaviour {
                 {
                     //target.transform.position = hit.collider.gameObject.transform.position;
                     temp = Instantiate(target, hit.collider.gameObject.transform);
+                    temp2 = Instantiate(targetCenter, hit.collider.gameObject.transform);
                 }
             }
 
@@ -58,6 +69,7 @@ public class ClickManager : MonoBehaviour {
         else if(Input.GetMouseButtonUp(0))
         {
             Destroy(temp);
+            Destroy(temp2);
             timeSpan = 0;
         }
     }
@@ -86,6 +98,7 @@ public class ClickManager : MonoBehaviour {
             Debug.Log("DMG = 1");
             playerObj.GetComponent<PlayerController>().AttackDamage = 1;
             temp.GetComponent<Renderer>().material.color = Color.white;
+            temp2.GetComponent<Renderer>().material.color = Color.white;
         }
 
         //0.5 ~ 0.9초 까지는 데미지 2 판정
@@ -94,6 +107,7 @@ public class ClickManager : MonoBehaviour {
             Debug.Log("DMG = 2");
             playerObj.GetComponent<PlayerController>().AttackDamage = 2;
             temp.GetComponent<Renderer>().material.color = Color.yellow;
+            temp2.GetComponent<Renderer>().material.color = Color.yellow;
 
         }
 
@@ -103,7 +117,7 @@ public class ClickManager : MonoBehaviour {
             Debug.Log("DMG = 3");
             playerObj.GetComponent<PlayerController>().AttackDamage = 3;
             temp.GetComponent<Renderer>().material.color = Color.red;
-
+            temp2.GetComponent<Renderer>().material.color = Color.red;
         }
 
         //1.25 ~ 1.4초 까지는 데미지 3 판정
@@ -112,7 +126,7 @@ public class ClickManager : MonoBehaviour {
             Debug.Log("DMG = 3");
             playerObj.GetComponent<PlayerController>().AttackDamage = 3;
             temp.GetComponent<Renderer>().material.color = Color.red;
-
+            temp2.GetComponent<Renderer>().material.color = Color.red;
         }
 
         //1.5 ~ 1.9초 까지는 데미지 2 판정
@@ -121,7 +135,7 @@ public class ClickManager : MonoBehaviour {
             Debug.Log("DMG = 2");
             playerObj.GetComponent<PlayerController>().AttackDamage = 2;
             temp.GetComponent<Renderer>().material.color = Color.yellow;
-
+            temp2.GetComponent<Renderer>().material.color = Color.yellow;
         }
 
         //2.0 ~ 2.4초 까지는 데미지 1 판정
@@ -130,7 +144,7 @@ public class ClickManager : MonoBehaviour {
             Debug.Log("DMG = 1");
             playerObj.GetComponent<PlayerController>().AttackDamage = 1;
             temp.GetComponent<Renderer>().material.color = Color.white;
-
+            temp2.GetComponent<Renderer>().material.color = Color.white;
         }
 
         //2.5이 넘어가면 0부터 루프 시켜 줌
