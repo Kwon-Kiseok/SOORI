@@ -54,6 +54,11 @@ public class PlayerController : MonoBehaviour {
     private float dashCoolTime;
     private float dashTime;
 
+    //--Camera Shake elements
+    public float camShakeAMT = 0.1f;
+    public GameObject camShake;
+
+
     //--AudioSource Arrow
     public AudioClip D1Arrow_audio;
     public AudioClip D2Arrow_audio;
@@ -350,6 +355,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (this.isImmune == false && isDead == false)
         {
+            camShake.gameObject.GetComponent<CameraShake>().Shake(camShakeAMT, 0.2f);
             isHit = true;
             this.Health = this.Health - damage;
             Debug.Log("Player Health : " + this.Health.ToString());

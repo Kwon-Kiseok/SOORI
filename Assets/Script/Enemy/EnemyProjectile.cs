@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour {
 
-    public GameObject Target;
+    [SerializeField] private GameObject Target;
     public float speed;
     public float deleteTime;
     private bool isRight = false;
@@ -12,18 +12,20 @@ public class EnemyProjectile : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        Target = GameObject.FindGameObjectWithTag("Player");
         rigid = GetComponent<Rigidbody2D>();
 
         Destroy(gameObject, deleteTime);
 
         //투사체 방향
-        if (rigid.velocity.x < 0)
-            isRight = false;
-        else if (rigid.velocity.x > 0)
+        if (Target.GetComponent<Transform>().position.x > transform.position.x)
             isRight = true;
+        else if (Target.GetComponent<Transform>().position.x < transform.position.x)
+            isRight = false;
 
         if(isRight == true)
         {
+            transform.localScale = new Vector3(-1, 1, 1);
             rigid.velocity = transform.right * speed;
         }
         else if(isRight == false)
@@ -35,7 +37,6 @@ public class EnemyProjectile : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
     }
 
     void OnTriggerEnter2D(Collider2D other)

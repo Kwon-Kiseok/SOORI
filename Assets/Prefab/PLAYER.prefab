@@ -315,6 +315,8 @@ MonoBehaviour:
   dashSpeed: 50
   startDashTime: 0.2
   direction: 0
+  camShakeAMT: 0.1
+  camShake: {fileID: 1616636439134370, guid: 4a8b42e8f3633e94b8d4d280535c40e8, type: 2}
   D1Arrow_audio: {fileID: 8300000, guid: ceda5df99358f474ea6e980fc8d672d6, type: 3}
   D2Arrow_audio: {fileID: 8300000, guid: edd440e2bfcf2bb4daecbcd6db000d5f, type: 3}
   D3Arrow_audio: {fileID: 8300000, guid: 1be452d5ed6a22a49a586182b2994126, type: 3}

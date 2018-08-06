@@ -644,11 +644,13 @@ PlayerSettings:
   cloudServicesEnabled:
     Build: 0
     Collab: 1
+    ErrorHub: 0
+    Hub: 0
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 604db5f3-ebe6-4ecc-b39f-94ed6619ce5f
-  projectName: SOORI
+  cloudProjectId: fb79e846-4eb1-404e-ac6d-841a1cd1b52e
+  projectName: SOORI (1)
   organizationId: karyen031
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
