@@ -39,9 +39,10 @@ public class EnemySlime : EnemyController {
     //화면에 들어오는지 
     public bool isVisible = false;
 
-    //몬스터 체력
-    //public int Health = 3;
-
+    //몬스터 사이즈
+    private float sizeX;
+    private float sizeY;
+    
     //몬스터 효과음
     public AudioClip Hit_audio;
     public AudioClip[] Dead_audio;
@@ -55,6 +56,10 @@ public class EnemySlime : EnemyController {
         originTransform = transform.position;
         audio = GetComponent<AudioSource>();
         CurrentHealth = MaxHealth;
+
+
+        sizeX = transform.localScale.x;
+        sizeY = transform.localScale.y;
     }
 
     void Update()
@@ -102,13 +107,13 @@ public class EnemySlime : EnemyController {
                 //대상이 보다 오른쪽에 있을 경우
                 if(playerObj.transform.position.x > transform.position.x)
                 {
-                    transform.localScale = new Vector3(-1, 1, 1);
+                    transform.localScale = new Vector3(-sizeX, sizeY, 1);
                     isFacingRight = true;
                 }
                 //대상이 보다 왼쪽에 있을 경우
                 else if(playerObj.transform.position.x < transform.position.x)
                 {
-                    transform.localScale = new Vector3(1, 1, 1);
+                    transform.localScale = new Vector3(sizeX, sizeY, 1);
                     isFacingRight = false;
                 }
                 isTracing = true;
@@ -139,12 +144,12 @@ public class EnemySlime : EnemyController {
                 //대상이 보다 오른쪽에 있을 경우
                 if(playerObj.transform.position.x > transform.position.x)
                 {
-                    transform.localScale = new Vector3(-1, 1, 1);
+                    transform.localScale = new Vector3(-sizeX, sizeY, 1);
                     isFacingRight = true;
                 }
                 else if(playerObj.transform.position.x < transform.position.x)
                 {
-                    transform.localScale = new Vector3(1, 1, 1);
+                    transform.localScale = new Vector3(sizeX, sizeY, 1);
                     isFacingRight = false;
                 }
 
@@ -179,12 +184,12 @@ public class EnemySlime : EnemyController {
                 //대상이 보다 오른쪽에 있을 경우
                 if (playerObj.transform.position.x > transform.position.x)
                 {
-                    transform.localScale = new Vector3(-1, 1, 1);
+                    transform.localScale = new Vector3(-sizeX, sizeY, 1);
                     isFacingRight = true;
                 }
                 else if (playerObj.transform.position.x < transform.position.x)
                 {
-                    transform.localScale = new Vector3(1, 1, 1);
+                    transform.localScale = new Vector3(sizeX, sizeY, 1);
                     isFacingRight = false;
                 }
             }

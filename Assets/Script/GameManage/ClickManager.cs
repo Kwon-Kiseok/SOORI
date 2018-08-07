@@ -7,15 +7,19 @@ public class ClickManager : MonoBehaviour {
     /*
      * target = 원 UI 오브젝트
      * targetCenter = 원 중앙 표식 UI 오브젝트
+     * targetArrow = 타겟 상단 화살표
      * temp = 원 UI 오브젝트 복사
      * temp2 = 원 중앙 표식 UI 오브젝트 복사
+     * temp3 = 타겟 상단 화살표 복사
      */
 
     private GameObject playerObj;
     public GameObject target = null;
     public GameObject targetCenter = null;
+    public GameObject targetArrow = null;
     private GameObject temp = null;
     private GameObject temp2 = null;
+    private GameObject temp3 = null;
     
 
    
@@ -55,9 +59,9 @@ public class ClickManager : MonoBehaviour {
                 //조준점이 생기는 부분 , 객체 하나만 생성되도록 temp가 null일 때만 생성
                 if (temp == null && hit.collider.gameObject.tag == "Enemy")
                 {
-                    //target.transform.position = hit.collider.gameObject.transform.position;
                     temp = Instantiate(target, hit.collider.gameObject.transform);
                     temp2 = Instantiate(targetCenter, hit.collider.gameObject.transform);
+                    temp3 = Instantiate(targetArrow, hit.collider.gameObject.transform);
                 }
             }
 
@@ -70,6 +74,7 @@ public class ClickManager : MonoBehaviour {
         {
             Destroy(temp);
             Destroy(temp2);
+            Destroy(temp3);
             timeSpan = 0;
         }
     }

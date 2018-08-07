@@ -508,6 +508,12 @@ Prefab:
       value: 
       objectReference: {fileID: 1303024675560188, guid: 58ad7d38f53d4da44875935c4f7e79c7,
         type: 2}
+    - target: {fileID: 114127456310022474, guid: fcd3b34d5d292eb4ea4fb4b2dc4c04d4,
+        type: 2}
+      propertyPath: targetArrow
+      value: 
+      objectReference: {fileID: 1431874927650318, guid: 93432b4bd9efc6e488060e22a2d507c0,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fcd3b34d5d292eb4ea4fb4b2dc4c04d4, type: 2}
   m_IsPrefabParent: 0
