@@ -32,7 +32,6 @@ public class EnemyProjectile : MonoBehaviour {
         {
             rigid.velocity = -transform.right * speed;
         }
-        
 	}
 	
 	// Update is called once per frame

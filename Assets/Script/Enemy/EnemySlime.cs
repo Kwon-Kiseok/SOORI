@@ -39,10 +39,10 @@ public class EnemySlime : EnemyController {
     //화면에 들어오는지 
     public bool isVisible = false;
 
-    //몬스터 사이즈
+    //몬스터 체력
     private float sizeX;
     private float sizeY;
-    
+
     //몬스터 효과음
     public AudioClip Hit_audio;
     public AudioClip[] Dead_audio;
@@ -56,7 +56,6 @@ public class EnemySlime : EnemyController {
         originTransform = transform.position;
         audio = GetComponent<AudioSource>();
         CurrentHealth = MaxHealth;
-
 
         sizeX = transform.localScale.x;
         sizeY = transform.localScale.y;
