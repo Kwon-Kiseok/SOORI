@@ -28,16 +28,18 @@ public class CameraControl : MonoBehaviour
     public Vector2 minXAndY;
     
     private Transform player;
+    //private Transform boss;
     private Animator animator;
 
     AnimatorStateInfo animatorState;
 
     //보스전 시 알리는 변수
-    private bool MeetTheBoss = false;
+    public bool MeetTheBoss = false;
 
     void Start()
     {      
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        //boss = GameObject.FindGameObjectWithTag("Boss").transform;
         animator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
         SceneNum = SceneManager.GetActiveScene().buildIndex;
     }
@@ -136,9 +138,13 @@ public class CameraControl : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, new Vector3(390, 160, transform.position.z), Time.deltaTime);
 
             Vector3 playerPos = Camera.main.WorldToViewportPoint(player.position);
+            //Vector3 bossPos = Camera.main.WorldToViewportPoint(boss.position);
             if (playerPos.x < 0f) playerPos.x = 0f;
             if (playerPos.x > 1f) playerPos.x = 1f;
+            //if (bossPos.x < 0f) { bossPos.x = 0f; boss.GetComponent<EnemyController>().Flip(); boss.GetComponent<WerewolfController>().WolfRunCount++; }
+            //if (bossPos.x > 1f) { bossPos.x = 1f; boss.GetComponent<EnemyController>().Flip(); boss.GetComponent<WerewolfController>().WolfRunCount++; }
             player.position = Camera.main.ViewportToWorldPoint(playerPos);
+            //boss.position = Camera.main.ViewportToWorldPoint(bossPos);
         }
     }
 }

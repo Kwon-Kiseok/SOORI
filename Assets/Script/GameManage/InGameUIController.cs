@@ -44,7 +44,7 @@ public class InGameUIController : MonoBehaviour {
 
             if(hit.collider != null)
             {
-                if (hit.collider.gameObject.tag == "Enemy")
+                if (hit.collider.gameObject.tag == "Enemy" || hit.collider.gameObject.tag == "Boss")
                 {
                     TargetObject = hit.collider.gameObject;
 

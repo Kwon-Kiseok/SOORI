@@ -40,7 +40,7 @@ public class EnemyController : MonoBehaviour {
     }
     void CheckRange()
     {
-        if(spotted == true)
+        if(spotted == true && gameObject.tag != "Boss")
         {
             if (SurpriseMark.activeSelf == true)
             {
@@ -48,7 +48,7 @@ public class EnemyController : MonoBehaviour {
                 gameObject.GetComponent<EnemySlime>().RushAttack();
             }
         }
-        else if(spotted == false)
+        else if(spotted == false && gameObject.tag != "Boss")
         {
            // SurpriseMark.SetActive(false);
             gameObject.GetComponent<EnemySlime>().rushAttack = false;

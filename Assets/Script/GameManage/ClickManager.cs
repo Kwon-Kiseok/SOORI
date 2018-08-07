@@ -57,7 +57,7 @@ public class ClickManager : MonoBehaviour {
                 Debug.Log(hit.collider.gameObject.tag);
                 
                 //조준점이 생기는 부분 , 객체 하나만 생성되도록 temp가 null일 때만 생성
-                if (temp == null && hit.collider.gameObject.tag == "Enemy")
+                if (temp == null && (hit.collider.gameObject.tag == "Enemy" || hit.collider.gameObject.tag == "Boss"))
                 {
                     temp = Instantiate(target, hit.collider.gameObject.transform);
                     temp2 = Instantiate(targetCenter, hit.collider.gameObject.transform);

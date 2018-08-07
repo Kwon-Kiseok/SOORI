@@ -39,7 +39,7 @@ public class EnemySlime : EnemyController {
     //화면에 들어오는지 
     public bool isVisible = false;
 
-    //몬스터 체력
+    //몬스터 사이즈
     private float sizeX;
     private float sizeY;
 

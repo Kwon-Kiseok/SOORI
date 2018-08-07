@@ -362,7 +362,7 @@ MonoBehaviour:
   hitParticle: {fileID: 1656580837662744, guid: 5980d2da93176f343b7e8d4f2fca711a,
     type: 2}
   EnemyType: 3
-  TraceRange: 1
+  TraceRange: 25
   isHit: 0
   stunTime: 0
   rushAttack: 0

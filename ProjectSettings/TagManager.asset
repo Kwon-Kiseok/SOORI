@@ -13,6 +13,7 @@ TagManager:
   - CheckPoint
   - Enemy
   - Arrow
+  - Boss
   layers:
   - Default
   - TransparentFX
