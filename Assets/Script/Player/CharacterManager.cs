@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class CharacterManager : MonoBehaviour {
 
-    public GameObject UnDamagedState;
-    public GameObject DamagedState;
+   public GameObject UnDamagedState;
+   public  GameObject DamagedState;
 
-    void Awake()
+    void Start()
     {
         UnDamagedState.GetComponent<PlayerController>();
         DamagedState.GetComponent<PlayerController>();
         UnDamagedState.SetActive(true);
         DamagedState.SetActive(false);
 
+        
     }
     void Update()
     {
+        
+
         if(DamagedState.GetComponent<PlayerController>().Health == 2 && DamagedState.activeSelf )//&& DamagedState.GetComponent<PlayerController>().isImmune == true)
         {
+
             UnDamagedState.transform.position = DamagedState.transform.position;
 
             UnDamagedState.GetComponent<PlayerController>().Health = 2;

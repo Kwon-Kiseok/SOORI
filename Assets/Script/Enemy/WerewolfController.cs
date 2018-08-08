@@ -133,7 +133,6 @@ public class WerewolfController : EnemyController {
             WolfRunCount = 0;
         }
 
-
         if (WolfRunCount < 3 && isWolfRun == true)
         {
             animator.SetInteger("BOSSSTATE", 1);

@@ -15,7 +15,7 @@ public class GameMaster : MonoBehaviour {
     public GameObject PauseMenuObj;
     public GameObject EventManager;
     public GameObject InGameUI;
-    public GameObject CharacterManager;
+    //public GameObject CharacterManager;
     public GameObject ClickManager;
     public Button PauseButton;
 
@@ -29,7 +29,7 @@ public class GameMaster : MonoBehaviour {
         DontDestroyOnLoad(PauseMenuObj);
         DontDestroyOnLoad(EventManager);
         DontDestroyOnLoad(InGameUI);
-        DontDestroyOnLoad(CharacterManager);
+        //DontDestroyOnLoad(CharacterManager);
         DontDestroyOnLoad(ClickManager);
     }
 
@@ -58,7 +58,7 @@ public class GameMaster : MonoBehaviour {
         SceneManager.LoadScene(LoadingLevel);      
         audioManager.Play();
         InGameUI.gameObject.SetActive(true);
-        CharacterManager.gameObject.SetActive(true);
+        //CharacterManager.gameObject.SetActive(true);
         ClickManager.gameObject.SetActive(true);
         PauseButton.gameObject.SetActive(true);
     }
