@@ -152,11 +152,12 @@ public class EnemySlime : EnemyController {
                     isFacingRight = false;
                 }
 
+                sightEnd.position = playerObj.transform.position;
+
                 //대쉬 쿨타임이 다 찼을 경우 
                 //해당 시간 플레이어 감지 위치로 addforce 해줌
                 if (SurpriseMark.activeSelf == true && Time.time > nextRush)
-                {
-                    sightEnd.position = playerObj.transform.position;
+                {                   
                     Vector3 temp = sightEnd.position;
                     rigid.AddForce((temp - transform.position) * maxSpeed, ForceMode2D.Impulse);
                 }

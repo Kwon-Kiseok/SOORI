@@ -28,14 +28,16 @@ public class EnemyController : MonoBehaviour {
         spotted = Physics2D.Linecast(sightStart.position, sightEnd.position, 1<<LayerMask.NameToLayer("Player"));
 
         CheckRange();
-        if (Time.time + 0.5 >= nextRush)
-        {
-            SurpriseMark.SetActive(true);
-        }
-        else
-        {
-            SurpriseMark.SetActive(false);
-        }
+
+
+            if (spotted == true && Time.time + 0.5 >= nextRush)
+            {
+                SurpriseMark.SetActive(true);
+            }
+            else
+            {
+                SurpriseMark.SetActive(false);
+            }
 
     }
     void CheckRange()

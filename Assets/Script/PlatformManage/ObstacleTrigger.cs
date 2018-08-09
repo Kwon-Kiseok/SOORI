@@ -27,6 +27,10 @@ public class ObstacleTrigger : MonoBehaviour {
         {
             return;
         }
+        else if(other.tag == "FallingPlatform")
+        {
+            return;
+        }
         else
         {
             Destroy(other.gameObject);

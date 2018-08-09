@@ -1,6 +1,7 @@
 ﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
@@ -75,6 +76,7 @@ public class PlayerController : MonoBehaviour {
     SpriteRenderer spriteRenderer;
     AnimatorStateInfo animatorState;
     AudioSource audio;
+    GameObject GM;
 
     void OnEnable()
     {
@@ -92,6 +94,7 @@ public class PlayerController : MonoBehaviour {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         dashTime = startDashTime;
         audio = GetComponent<AudioSource>();
+        GM = GameObject.FindGameObjectWithTag("GameController");
     }
 
 	void Update () {
@@ -149,7 +152,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (backjumpCoolTime < 1)
             {
-                if (Input.GetButtonDown("Jump"))
+                if (Input.GetKeyDown(KeyCode.W))
                 {
                     jumpCount--;
                     isJumping = true;
@@ -193,7 +196,7 @@ public class PlayerController : MonoBehaviour {
     void Move()
     {
         //캐릭터 공격 애니메이션 동안은 이동 불가
-        if (animatorState.IsName("SOORI_SHOT_HOLD"))
+        if (animatorState.IsName("SOORI_SHOT_HOLD") || isDead == true)
             return;
 
         Vector3 moveVelocity = Vector3.zero;
@@ -214,7 +217,7 @@ public class PlayerController : MonoBehaviour {
     //-------[Jumping Function]---------------
     void Jump()
     {
-        if (!isJumping)
+        if (!isJumping || isDead == true)
             return;
 
         rigid.velocity = Vector2.zero;
@@ -226,7 +229,7 @@ public class PlayerController : MonoBehaviour {
     //-------[BackJump Function]------------
     void BackJump()
     {
-        if (!isBackStep)
+        if (!isBackStep || isDead == true)
             return;
 
         rigid.velocity = Vector2.zero;
@@ -291,7 +294,7 @@ public class PlayerController : MonoBehaviour {
     //-------[Dash Function]---------------
     void Dash()
     {
-        if (dashCoolTime > 0 || isJumpShot == true)
+        if (dashCoolTime > 0 || isJumpShot == true || isDead == true)
         {
             return;
         }       
@@ -401,13 +404,15 @@ public class PlayerController : MonoBehaviour {
         this.spriteRenderer.sprite = deadSprite;
         this.animator.enabled = false;
         this.gameObject.GetComponent<Animator>().SetTrigger("Damage");
-        PlayerController controller = this.gameObject.GetComponent<PlayerController>();
-        controller.enabled = false;
+        //PlayerController controller = this.gameObject.GetComponent<PlayerController>();
+        //controller.enabled = false;
         rigid.velocity = new Vector2(0, 0);
         if (Rdir == true)
             rigid.AddForce(new Vector2(-1000, 1000));
         else
             rigid.AddForce(new Vector2(1000, 1000));
+
+        Invoke("GameOver", 3);
     }
 
     //--------[Shooting Animation Control Function]------
@@ -511,4 +516,15 @@ public class PlayerController : MonoBehaviour {
         }
     }
     
+    //게임오버 화면으로
+    void GameOver()
+    {
+        SceneManager.LoadScene(3);
+    }
+
+    //잠시 지연
+    void DelayTime()
+    {
+        Debug.Log("Dead");
+    }
 }
