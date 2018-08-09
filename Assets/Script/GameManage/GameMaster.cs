@@ -22,6 +22,7 @@ public class GameMaster : MonoBehaviour {
     public Button PauseButton;
 
     AudioSource audioManager;
+    public AudioClip loopAudio;
 
     void Awake()
     {
@@ -62,8 +63,14 @@ public class GameMaster : MonoBehaviour {
         {
             isAudioPlay = true;
             audioManager.Play();
-        }
+        }        
 
+        if(isAudioPlay == true && !audioManager.isPlaying)
+        {
+            audioManager.clip = loopAudio;
+            audioManager.Play();
+            audioManager.loop = true;
+        }
     }
 
     public void TitleScene()
